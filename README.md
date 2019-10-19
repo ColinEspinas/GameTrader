@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Adonis fullstack application
 
 This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
@@ -29,3 +30,7 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+=======
+# GameTrader
+🎮 A game trading online platform developped for education purpose
+>>>>>>> a0cd40ef668ca480b2ca9e8a4c0b28efc65e5dfb
