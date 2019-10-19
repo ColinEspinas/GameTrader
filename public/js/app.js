@@ -102,9 +102,9 @@ eval("\n\n//# sourceURL=webpack:///./resources/assets/js/app.js?");
   !*** ./resources/assets/sass/app.scss ***!
   \****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("// removed by extract-text-webpack-plugin\n\n//# sourceURL=webpack:///./resources/assets/sass/app.scss?");
+eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./resources/assets/sass/app.scss?");
 
 /***/ }),
 
