@@ -1,0 +1,24 @@
+{{--  Select Box Component  --}}
+
+<div class="select-container">
+<button class="select-btn" id="{{ id }}-select-btn">{{ title }}<i data-feather="chevron-down"></i></button>
+	<ul class="select-box" id="{{ id }}-select">
+		@each(item in items)
+			<li>
+				<label>
+				<input type="checkbox" name="{{ item.name }}">
+					<span class="checkmark"></span>
+					<span class="text">{{ item.display }}</span>
+				</label>
+			</li>
+		@endeach
+	</ul>
+</div>
+
+
+{{--  Usage exemple  --}}
+
+<!--  @!component('components.select-box', id='test', title='Select something', items = [
+	{name: 'choice1', display: 'Choice1'},
+	{name: 'choice2', display: 'Choice2'}
+])  -->

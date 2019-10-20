@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
 var path = require('path');
 
 const extractSass = new MiniCssExtractPlugin({
@@ -17,16 +16,16 @@ function sassRules() {
   }]
 }
 
-function scriptRules() {
-  return [{
-    test: /\.js$/,
-    exclude: [/node_modules/],
-    loader: 'babel-loader',
-    options: {
-      presets: ['@babel/env']
-    }
-  }]
-}
+// function scriptRules() {
+//   return [{
+//     test: /\.js$/,
+//     exclude: [/node_modules/],
+//     loader: 'babel-loader',
+//     options: {
+//       presets: ['@babel/env']
+//     }
+//   }]
+// }
 
 module.exports = {
   entry: [
@@ -38,7 +37,7 @@ module.exports = {
     filename: 'public/js/app.js'
   },
   module: {
-    rules: sassRules().concat(scriptRules())
+    rules: sassRules()
   },
   plugins: [
     extractSass

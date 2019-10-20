@@ -1,20 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Hello Adonis</title>
-  {{ style('/css/app') }}
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Hello Adonis</title>
+
+	<!-- Style -->
+	{{ style('css/app') }}
+
+	<!-- Icons -->
+	<script src="https://unpkg.com/feather-icons"></script>
+
+	<!-- Lilcss -->
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/ColinEspinas/lilcss/css/utility.min.css'>
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/ColinEspinas/lilcss/css/grid.min.css'>
+
+	<!-- Plugin CSS -->
+	<link type="text/css"
+		href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/css/OverlayScrollbars.min.css"
+		rel="stylesheet" />
+	<!-- Plugin JS -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.9.1/js/OverlayScrollbars.min.js"></script>
+
+	<!-- Scripts -->
+	{{ script('js/app') }}
 </head>
+
 <body>
-  <section>
-    <div class="logo"></div>
-    <div class="title"></div>
-    <div class="subtitle">
-      <p>AdonisJs simplicity will make you feel confident about your code</p>
-      <p>
-        Don't know where to start? Read the <a href="https://adonisjs.com/docs">documentation</a>.
-      </p>
-    </div>
-  </section>
+	<div class="wrapper lil-row">
+		<nav class="side-nav lil-col 2-12">
+			<div class="brand-header">
+				<h1>GameTrader</h1>
+			</div>
+			<div class="user-section">
+				<div class="avatar">
+					<a href="#">
+						<img src="/avatar.jpg" alt="">
+					</a>
+				</div>
+				<div class="infos">
+					<span class="name">Colin E.</span>
+					<span class="rating">Rating: 4.76/5</span>
+				</div>
+			</div>
+			<div class="action-section">
+				<button class="highlight-btn"><span>Create an Ad<i data-feather="plus"></i></span></button>
+			</div>
+			<ul class="menu">
+				<div class="title">Menu</div>
+				<li><a class="active" href=""><i data-feather="home"></i>Home</a></li>
+				<li><a href=""><i data-feather="user"></i>Profile</a></li>
+			</ul>
+			<ul class="menu">
+				<div class="title">Account</div>
+				<li><a href=""><i data-feather="file-text"></i>My orders</a></li>
+				<li><a href=""><i data-feather="bar-chart"></i>My sales</a></li>
+				<li><a href=""><i data-feather="settings"></i>Settings</a></li>
+			</ul>
+			<ul class="menu">
+				<li><a href=""><i data-feather="log-out"></i>Log out</a></li>
+			</ul>
+		</nav>
+		<main class="lil-col 10-12">
+			<div class="header-bar">
+				<div class="search">
+					<input class="search-bar" type="text" placeholder="Search...">
+					<ul class="results"></ul>
+				</div>
+			</div>
+			<section class="main-section">
+				<div class="info-header">
+					<div class="content">
+						<span>Use code "IMCOOL" to get 5% reductions</span>
+					</div>
+				</div>
+				<br>
+				<br>
+				<br>
+			</section>
+		</main>
+	</div>
+	<script>
+		feather.replace();
+	</script>
 </body>
+
 </html>
