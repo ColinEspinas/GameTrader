@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "node ace test",
-    "webpack": "webpack"
+	"webpack": "webpack",
+	"watch": "webpack --mode=development --watch"
   },
   "keywords": [
     "adonisjs",

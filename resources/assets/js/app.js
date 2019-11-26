@@ -2,7 +2,16 @@ document.addEventListener("DOMContentLoaded", function() {
     //The first argument are the elements to which the plugin shall be initialized
     //The second argument has to be at least a empty object or a object with your desired options
     OverlayScrollbars(document.querySelectorAll('.main-section'), {
-        resize          : "both",
+        resize          : false,
+        sizeAutoCapable : true,
+        paddingAbsolute : true,
+        scrollbars : {
+            clickScrolling : true
+        }
+	});
+	
+	OverlayScrollbars(document.querySelectorAll('.side-nav-body'), {
+        resize          : false,
         sizeAutoCapable : true,
         paddingAbsolute : true,
         scrollbars : {
@@ -20,7 +29,16 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     });
 
-	let searchBar = document.querySelector(".search-bar");
+	let searchBarTaggle = new Taggle('example1',{
+		placeholder: 'Search for games...',
+		allowDuplicates: false,
+		preserveCase: true,
+		clearOnBlur: false
+	});
+
+	let searchBar = searchBarTaggle.getInput();
+
+	// let searchBar = document.querySelector(".search-bar");
 	let resultsDiv = document.querySelector(".results");
 	let resultsBtns;
 
@@ -44,7 +62,12 @@ document.addEventListener("DOMContentLoaded", function() {
 						resultsBtns[(index + 1) % resultsBtns.length].focus();
 					}
 					if (e.key === "ArrowUp") {
-						resultsBtns[(index - 1) % resultsBtns.length].focus();
+						if (index - 1 < 0) {
+							resultsBtns[resultsBtns.length - 1].focus();
+						} 
+						else {
+							resultsBtns[(index - 1) % resultsBtns.length].focus();
+						}
 					}
 				});
 			});
@@ -83,5 +106,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	});
 });
+
 
 
