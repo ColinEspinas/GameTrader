@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     //The first argument are the elements to which the plugin shall be initialized
     //The second argument has to be at least a empty object or a object with your desired options
     OverlayScrollbars(document.querySelectorAll('.main-section'), {
-        resize          : false,
         sizeAutoCapable : true,
         paddingAbsolute : true,
         scrollbars : {
@@ -11,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 	
 	OverlayScrollbars(document.querySelectorAll('.side-nav-body'), {
-        resize          : false,
         sizeAutoCapable : true,
         paddingAbsolute : true,
         scrollbars : {

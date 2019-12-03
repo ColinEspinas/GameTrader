@@ -43,7 +43,6 @@ body {
 		justify-content: center;
 		padding: 10px 25px;
 		border-bottom: 1px solid rgba(color(dark), 0.1);
-		margin: 0 0 25px 0;
 		align-items: center;
 		min-height: 86px;
 		& h1 {
@@ -54,9 +53,13 @@ body {
 		}
 	}
 	
+	.side-nav-body {
+		height: calc(100% - 86px);
+	}
+
 	.user-section {
 		padding: 0 25px;
-		margin: 0 0 25px 0;
+		margin: 25px 0;
 		display: flex;
 		align-items: center;
 		.avatar img {
@@ -353,6 +356,15 @@ main {
 				animation: slideDown 1000ms 1;
 			}
 		}
+
+		footer {
+			border-top: 1px solid rgba(color(dark), 0.1);
+			padding: 15px;
+			p {
+				margin: 0;
+				text-align: center;
+			}
+		}
 	}
 }
 
@@ -551,4 +563,98 @@ main {
     transform: scale(1.5);
     background-color: rgb(28, 63, 253) !important;
     transition: box-shadow 200ms ease 0s, transform 200ms ease 0s !important;
+}
+
+.ads-container {
+	padding: 0 25px;
+	margin: 25px auto;
+	max-width: 960px;
+
+	.ad {
+		display: flex;
+		box-shadow: 0 0 40px -5px rgba(color(dark), 0.2);
+		border-radius: 5px;
+		overflow: hidden;
+		position: relative;
+		margin: 25px 0;
+
+		img {
+			position: relative;
+			height: 150px;
+			width: 300px;
+			object-fit: cover;
+			border-radius: 5px;
+		}
+
+		.gradient {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 300px;
+			height: 100%;
+			background: rgb(255,255,255);
+			background: linear-gradient(90deg, rgba(255,255,255,0) 30%, color(lighter) 100%);
+		}
+
+		.content {
+			position: relative;
+			margin-left: 25px;
+			width: 100%;
+			overflow: hidden;
+
+			.title {
+				font-size: 1.5em;
+				margin: 10px 0 0 0;
+				display: inline-block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				word-break: break-all;
+				width: 100%;
+			}
+
+			.price {
+				color: color(primary);
+				font-size: 2em;
+			}
+
+			.category {
+				display: block;
+				color: rgba(color(dark), 0.6);
+			}
+
+			.date {
+				display: block;
+				color: rgba(color(dark), 0.6);
+			}
+
+			.icon {
+				position: absolute;
+				bottom: 30px;
+				right: 100px;
+				transform: scale(8);
+				opacity: 0.1;
+			}
+
+			.icon1 {
+				position: absolute;
+				bottom: 80px;
+				right: 150px;
+				transform: scale(2) rotate(25deg);
+				opacity: 0.1;
+			}
+
+			.icon2 {
+				position: absolute;
+				bottom: 130px;
+				right: 100px;
+				transform: scale(3) rotate(68deg);
+				opacity: 0.1;
+			}
+
+			&::after {
+				
+			}
+		}
+	}
 }

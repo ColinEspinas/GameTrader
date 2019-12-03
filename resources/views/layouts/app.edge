@@ -41,34 +41,36 @@
 			<div class="brand-header">
 				<h1>GameTrader</h1>
 			</div>
-			<div class="user-section">
-				<div class="avatar">
-					<a href="#">
-						<img src="/avatar.jpg" alt="">
-					</a>
+			<div class="side-nav-body">
+				<div class="user-section">
+					<div class="avatar">
+						<a href="#">
+							<img src="/avatar.jpg" alt="">
+						</a>
+					</div>
+					<div class="infos">
+						<span class="name">Colin E.</span>
+						<span class="rating">Rating: 4.76/5</span>
+					</div>
 				</div>
-				<div class="infos">
-					<span class="name">Colin E.</span>
-					<span class="rating">Rating: 4.76/5</span>
+				<div class="action-section">
+					<button class="highlight-btn"><span>Create an Ad<i data-feather="plus"></i></span></button>
 				</div>
+				<ul class="menu">
+					<div class="title">Menu</div>
+					<li><a class="active" href=""><i data-feather="home"></i>Home</a></li>
+					<li><a href=""><i data-feather="user"></i>Profile</a></li>
+				</ul>
+				<ul class="menu">
+					<div class="title">Account</div>
+					<li><a href=""><i data-feather="file-text"></i>My orders</a></li>
+					<li><a href=""><i data-feather="bar-chart"></i>My sales</a></li>
+					<li><a href=""><i data-feather="settings"></i>Settings</a></li>
+				</ul>
+				<ul class="menu">
+					<li><a href=""><i data-feather="log-out"></i>Log out</a></li>
+				</ul>
 			</div>
-			<div class="action-section">
-				<button class="highlight-btn"><span>Create an Ad<i data-feather="plus"></i></span></button>
-			</div>
-			<ul class="menu">
-				<div class="title">Menu</div>
-				<li><a class="active" href=""><i data-feather="home"></i>Home</a></li>
-				<li><a href=""><i data-feather="user"></i>Profile</a></li>
-			</ul>
-			<ul class="menu">
-				<div class="title">Account</div>
-				<li><a href=""><i data-feather="file-text"></i>My orders</a></li>
-				<li><a href=""><i data-feather="bar-chart"></i>My sales</a></li>
-				<li><a href=""><i data-feather="settings"></i>Settings</a></li>
-			</ul>
-			<ul class="menu">
-				<li><a href=""><i data-feather="log-out"></i>Log out</a></li>
-			</ul>
 		</nav>
 		<main>
 			<div class="header-bar">
@@ -78,9 +80,13 @@
 					<ul class="results"></ul>
 				</div>
 			</div>
-			<section class="main-section">
+			<div class="main-section">
 				@!section('content')
-			</section>
+				<footer>
+					<p>Just a temporary page footer 😉</p>
+				</footer>
+			</div>
+			
 		</main>
 	</div>
 
