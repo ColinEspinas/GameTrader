@@ -9,7 +9,8 @@
 
 	<!-- Style -->
 	{{ style('css/app') }}
-	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+
+	@!section('stylesheets')
 
 	<!-- Icons -->
 	<script src="https://unpkg.com/feather-icons"></script>
@@ -29,6 +30,8 @@
 	<!-- Scripts -->
 	{{ script('js/app') }}
 	{{ script('js/taggle') }}
+
+	@!section('pre-content-scripts')
 
 </head>
 
@@ -76,85 +79,19 @@
 				</div>
 			</div>
 			<section class="main-section">
-				<!--  <div class="info-header">
-					<div class="content">
-						<span>Use code "IMCOOL" to get 5% reductions</span>
-					</div>
-				</div>  -->
-				<div class="swiper-container">
-						<div class="swiper-wrapper">
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-							<div class="swiper-slide ad-slide"></div>
-						</div>
-					
-						<!-- Add Pagination -->
-						<div class="swiper-pagination"></div>
-		
-						<!-- Add Arrows -->
-						<div class="swiper-button-next"></div>
-						<div class="swiper-button-prev"></div>
-		
-					</div>
+				@!section('content')
 			</section>
-
-			  <!-- Swiper -->
-			
 		</main>
 	</div>
 
-	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
-
-	<!-- Initialize Swiper -->
-	<script>
-		var swiper = new Swiper('.swiper-container', {
-  			effect: 'coverflow',
-  			// grabCursor: true,
-  			centeredSlides: true,
-  			slidesPerView: 2,
-  			loop: true,
-  			autoplay: {
-  				delay: 2500,
-  				disableOnInteraction: true,
-  			},
-  			coverflowEffect: {
-  				rotate: 10,
-  				stretch: 0,
-  				depth: 100,
-  				modifier: 1,
-  				slideShadows : false,
-  			},
-  			pagination: {
-  				el: '.swiper-pagination',
-  				clickable: true,
-  			},
-  			navigation: {
-  				nextEl: '.swiper-button-next',
-  				prevEl: '.swiper-button-prev',
-  			},
-  			breakpoints: {
-  				640: {
-  					slidesPerView: 2,
-  				},
-  				768: {
-  					slidesPerView: 3,
-  				},
-  				1024: {
-  					slidesPerView: 4,
-  				},
-  			}
-  		});
-	</script>
 
 	<script>
 		feather.replace();
 	</script>
+
+	@!section('post-content-scripts')
+	
+	
 </body>
 
 </html>
