@@ -68,7 +68,12 @@
 					<li><a href=""><i data-feather="settings"></i>Settings</a></li>
 				</ul>
 				<ul class="menu">
-					<li><a href=""><i data-feather="log-out"></i>Log out</a></li>
+				@loggedIn
+					<li><a href="/logout"><i data-feather="log-out"></i>Log out</a></li>
+				@else
+					<li><a href="/login"><i data-feather="log-in"></i>Log in</a></li>
+					<li><a href="/signup"><i data-feather="user-plus"></i>Sign up</a></li>
+				@endloggedIn
 				</ul>
 			</div>
 		</nav>
