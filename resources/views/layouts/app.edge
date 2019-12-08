@@ -45,6 +45,7 @@
 				<button class="close-btn"><i data-feather="chevron-left"></i></button>
 			</div>
 			<div class="side-nav-body">
+				@loggedIn
 				<div class="user-section">
 					<div class="avatar">
 						<a href="#">
@@ -52,10 +53,11 @@
 						</a>
 					</div>
 					<div class="infos">
-						<span class="name">Colin E.</span>
-						<span class="rating">Rating: 4.76/5</span>
+						<span class="name">{{ auth.user.username }}</span>
+						{{--  <span class="rating">Rating: 4.76/5</span>  --}}
 					</div>
 				</div>
+				@endloggedIn
 				<div class="action-section">
 					<button class="highlight-btn" onclick="window.location.replace('/ad/create')"><span>Create an Ad<i data-feather="plus"></i></span></button>
 				</div>

@@ -65,7 +65,7 @@ hr {
     height: calc(100% - 86px); }
   .side-nav .user-section {
     padding: 0 25px;
-    margin: 25px 0;
+    margin: 25px 0 0 0;
     display: flex;
     align-items: center; }
     .side-nav .user-section .avatar img {
@@ -87,7 +87,7 @@ hr {
         color: rgba(16, 20, 23, 0.5); }
   .side-nav .action-section {
     padding: 0 25px;
-    margin: 0 0 25px 0; }
+    margin: 25px 0 25px 0; }
   .side-nav .menu {
     font-size: 0.95em;
     list-style-type: none;
