@@ -20,9 +20,7 @@ class AdController {
     }
 
     async userIndex({ view, auth }) {
-        //const user = await User.find(params.id);
         const ads = await auth.user.ads().fetch();
-
         return view.render('pages.advert', { ads : ads.toJSON() });
     }
 
@@ -49,6 +47,14 @@ class AdController {
 
         session.flash({ message: 'Your Ad has been updated.' });
         return response.redirect('/ad-show');
+    }
+
+    async latest({ view }) {
+        const ads = await Database
+            .table('ads')
+            .groupBy('updated_at')
+            .limit(10)
+        return view.render('/', { ads : ads });
     }
 }
 

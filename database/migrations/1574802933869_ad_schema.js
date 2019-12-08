@@ -11,6 +11,7 @@ class AdSchema extends Schema {
       table.text('content')
       table.boolean('isAccount')
       table.integer('user_id').unsigned().references('id').inTable('users')
+      table.integer('category_id').unsigned().references('id').inTable('categories')
       table.timestamps()
     })
   }
