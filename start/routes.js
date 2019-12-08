@@ -31,3 +31,13 @@ Route.get('/logout', async ({ auth, response }) => {
 
 Route.on('/profile').render('pages.profile');
 Route.put('/profile', 'UserController.update');
+
+Route.on('/ad-post').render('pages.posting')
+Route.post('/ad-post', 'AdController.create').validator('PostAd');
+
+Route.get('/ad-show', 'AdController.userIndex');
+Route.group(() => {
+    Route.get('/delete/:id', 'AdController.delete');
+    Route.get('/edit/:id', 'AdController.edit');
+    Route.post('/update/:id', 'AdController.update').validator('PostAd');
+}).prefix('/ad-show');

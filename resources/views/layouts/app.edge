@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<div class="action-section">
-					<button class="highlight-btn"><span>Create an Ad<i data-feather="plus"></i></span></button>
+					<button class="highlight-btn" onclick="window.location.replace('/ad-post')"><span>Create an Ad<i data-feather="plus"></i></span></button>
 				</div>
 				<ul class="menu">
 					<div class="title">Menu</div>
@@ -74,6 +74,7 @@
 				<ul class="menu">
 				@loggedIn
 					<li><a href="/logout"><i data-feather="log-out"></i>Log out</a></li>
+					<li><a href="/ad-show"><i data-feather="file-text"></i>My Ads</a></li>
 				@else
 					<li><a href="/login"><i data-feather="log-in"></i>Log in</a></li>
 					<li><a href="/signup"><i data-feather="user-plus"></i>Sign up</a></li>
