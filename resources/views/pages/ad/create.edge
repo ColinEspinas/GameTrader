@@ -1,0 +1,36 @@
+@layout('layouts.app')
+
+@section('title')
+GameTrader - Post Ad
+@endsection
+
+@section('content')
+  <h1>Posting</h1>
+
+  <div class="posting-container">
+    @if(flashMessage('message'))
+        <span>{{ flashMessage('message') }}</span>
+    @endif
+      <form action="{{ route('AdController.create') }}" method="POST">
+        {{ csrfField() }}
+
+        <label for="title">Title</label>
+        <input type="text" name="title">
+        @if(hasErrorFor('title'))
+            <span>
+                {{ getErrorFor('title') }}
+            </span>
+        @endif
+
+        <label for="content">Content</label>
+        <input type="text" name="content">
+        @if(hasErrorFor('content'))
+            <span>
+                {{ getErrorFor('content') }}
+            </span>
+        @endif
+
+        <button type="submit">Post</button>
+      </form>
+  </div>
+@endsection

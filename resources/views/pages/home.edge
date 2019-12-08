@@ -1,5 +1,9 @@
 @layout('layouts.app')
 
+@section('title')
+	GameTrader - Home
+@endsection
+
 @section('stylesheets')
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 @endsection
@@ -26,46 +30,14 @@
 	<div class="swiper-button-prev"></div>
 </div>
 
+
 <div class="ads-container">
-	<div class="ad">
-		<img src="https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg" alt="">
-		<div class="gradient"></div>
-		<div class="content">
-			<h3 class="title">Grand Theft Auto IV</h3>
-			<span class="category">Action</span>
-			<span class="date">5 days ago</span>
-			<span class="price">40€</span>
-			<i data-feather="key" class="icon"></i>
-			<i data-feather="key" class="icon1"></i>
-			<i data-feather="key" class="icon2"></i>
-		</div>
-	</div>
-	<div class="ad">
-		<img src="https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg" alt="">
-		<div class="gradient"></div>
-		<div class="content">
-			<h3 class="title">Grand Theft Auto IV</h3>
-			<span class="category">Action</span>
-			<span class="date">5 days ago</span>
-			<span class="price">40€</span>
-			<i data-feather="key" class="icon"></i>
-			<i data-feather="key" class="icon1"></i>
-			<i data-feather="key" class="icon2"></i>
-		</div>
-	</div>
-	<div class="ad">
-		<img src="https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg" alt="">
-		<div class="gradient"></div>
-		<div class="content">
-			<h3 class="title">Grand Theft Auto IV</h3>
-			<span class="category">Action</span>
-			<span class="date">5 days ago</span>
-			<span class="price">40€</span>
-			<i data-feather="key" class="icon"></i>
-			<i data-feather="key" class="icon1"></i>
-			<i data-feather="key" class="icon2"></i>
-		</div>
-	</div>
+	<h2 class="title">Recent Ads</h2>
+	<hr>
+	@each(ad in ads)
+		@!component('components.ads.ad', ad=ad)
+	@endeach
+	
 </div>
 
 @endsection
@@ -77,6 +49,8 @@
 <!-- Initialize Swiper -->
 <script>
 	var swiper = new Swiper('.swiper-container', {
+		observer: true,
+		observeParents: true,
 		effect: 'coverflow',
 		// grabCursor: true,
 		centeredSlides: true,

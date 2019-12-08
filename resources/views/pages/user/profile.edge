@@ -1,0 +1,54 @@
+@layout('layouts.app')
+
+@section('extracss')
+{{ style('css/temporary') }}
+@endsection
+
+@section('title')
+	GameTrader - Profile
+@endsection
+
+@section('content')
+  <h1>Profile</h1>
+
+  <div class="profile-container">
+  <form action="/user/{{ auth.user.id }}/edit?_method=PUT" method="POST">
+        {{ csrfField() }}
+
+        <label for="username">Username</label>
+        <input type="username" name="username" value="{{ old('username') }}">
+        @if(hasErrorFor('username'))
+            <span>
+                {{ getErrorFor('username') }}
+            </span>
+        @endif
+
+        <label for="email">Email</label>
+        <input type="email" name="email" value="{{ old('email') }}">
+        @if(hasErrorFor('email'))
+            <span>
+                {{ getErrorFor('email') }}
+            </span>
+        @endif
+
+        <label for="password">Previous Password</label>
+        <input type="password" name="password" value="">
+        @if(hasErrorFor('password'))
+            <span>
+                {{ getErrorFor('password') }}
+            </span>
+        @endif
+
+        <label for="passwordNew">New Password</label>
+        <input type="password" name="passwordNew">
+
+        <label for="avatar">Avatar</label>
+        <input type="avatar" name="avatar" value="{{ old('avatar', '') }}">
+
+        <label for="bio">Description</label>
+        <input type="bio" name="bio" value="{{ old('bio', '') }}">
+
+        <button type="submit">Update Profile</button>
+      </form>
+  </div>
+@endsection

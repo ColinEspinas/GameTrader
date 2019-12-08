@@ -8,7 +8,7 @@ class PlatformSchema extends Schema {
     this.create('platforms', (table) => {
 	  table.increments()
 	  table.string('name', 80).unique()
-	  table.string('image', 255)
+	  table.string('icon', 255)
 	  table.text('description')
       table.timestamps()
     })

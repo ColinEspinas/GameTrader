@@ -5,7 +5,9 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Hello Adonis</title>
+	<title>
+		@!section('title')
+	</title>
 
 	<!-- Style -->
 	{{ style('css/app') }}
@@ -39,7 +41,8 @@
 	<div class="wrapper lil-row">
 		<nav class="side-nav">
 			<div class="brand-header">
-				<h1>GameTrader</h1>
+				<h1><a href="/">GameTrader</a></h1>
+				<button class="close-btn"><i data-feather="chevron-left"></i></button>
 			</div>
 			<div class="side-nav-body">
 				<div class="user-section">
@@ -54,26 +57,29 @@
 					</div>
 				</div>
 				<div class="action-section">
-					<button class="highlight-btn"><span>Create an Ad<i data-feather="plus"></i></span></button>
+					<button class="highlight-btn" onclick="window.location.replace('/ad/create')"><span>Create an Ad<i data-feather="plus"></i></span></button>
 				</div>
 				<ul class="menu">
 					<div class="title">Menu</div>
-					<li><a class="active" href=""><i data-feather="home"></i>Home</a></li>
-					<li><a href=""><i data-feather="user"></i>Profile</a></li>
+					<li><a class="active" href="/"><i data-feather="home"></i>Home</a></li>
+				@loggedIn
+				<li><a href="/user/{{ auth.user.id }}"><i data-feather="user"></i>Profile</a></li>
+				<li><a href="/user/ads"><i data-feather="file-text"></i>My Ads</a></li>
+				@endloggedIn
 				</ul>
 				<ul class="menu">
-					<div class="title">Account</div>
-					<li><a href=""><i data-feather="file-text"></i>My orders</a></li>
-					<li><a href=""><i data-feather="bar-chart"></i>My sales</a></li>
-					<li><a href=""><i data-feather="settings"></i>Settings</a></li>
-				</ul>
-				<ul class="menu">
-					<li><a href=""><i data-feather="log-out"></i>Log out</a></li>
+				@loggedIn
+					<li><a href="/logout"><i data-feather="log-out"></i>Log out</a></li>
+				@else
+					<li><a href="/login"><i data-feather="log-in"></i>Log in</a></li>
+					<li><a href="/signup"><i data-feather="user-plus"></i>Sign up</a></li>
+				@endloggedIn
 				</ul>
 			</div>
 		</nav>
 		<main>
 			<div class="header-bar">
+				<button class="menu-btn"><i data-feather="chevron-right"></i></button>
 				<div class="search">
 					<div id="example1" class="">
 					</div>
@@ -86,7 +92,6 @@
 					<p>Just a temporary page footer 😉</p>
 				</footer>
 			</div>
-			
 		</main>
 	</div>
 
@@ -96,7 +101,6 @@
 	</script>
 
 	@!section('post-content-scripts')
-	
 	
 </body>
 

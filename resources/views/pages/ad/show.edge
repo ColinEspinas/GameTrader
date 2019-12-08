@@ -1,0 +1,98 @@
+@layout('layouts.app')
+
+@section('stylesheets')
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+@endsection
+
+@section('content')
+<div class="lil-row">
+	<div class="ad-main-content lil-col 9-12">
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
+				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
+				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
+				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
+			</div>
+
+			<!-- Add Pagination -->
+			<div class="swiper-pagination"></div>
+
+			<!-- Add Arrows -->
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+		</div>
+	</div>
+	<div class="ad-seller lil-col 3-12">
+		<div class="container">
+			<div class="avatar">
+				<a href="#">
+					<img src="/avatar.jpg" alt="">
+				</a>
+			</div>
+			<div class="infos">
+				<span class="name">Colin E.</span>
+				<span class="rating">Rating: 4.76/5</span>
+			</div>
+		</div>
+		<div class="ad-infos">
+			<h3 class="title">Grand Theft Auto IV</h3>
+			<p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae voluptatem exercitationem a deleniti, 
+				molestias cum explicabo vitae, fugiat eos laboriosam sunt nam laudantium accusantium possimus veniam harum corrupti
+				 quaerat ratione.</p>
+		</div>
+		<div class="contact">
+			<a class="highlight-btn center width-75 margin-tb-15"><span>Contact<i data-feather="mail"></i></span></a>
+		</div>
+	</div>
+</div>
+@endsection
+
+@section('post-content-scripts')
+
+<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	var swiper = new Swiper('.swiper-container', {
+		observer: true,
+		observeParents: true,
+		effect: 'coverflow',
+		// grabCursor: true,
+		centeredSlides: true,
+		slidesPerView: 2,
+		loop: true,
+		autoplay: {
+			delay: 2500,
+			disableOnInteraction: true,
+		},
+		coverflowEffect: {
+			rotate: 10,
+			stretch: 0,
+			depth: 100,
+			modifier: 1,
+			slideShadows : false,
+		},
+		pagination: {
+			el: '.swiper-pagination',
+			clickable: true,
+		},
+		navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		},
+		breakpoints: {
+			640: {
+				slidesPerView: 1,
+			},
+			768: {
+				slidesPerView: 1,
+			},
+			1024: {
+				slidesPerView: 2,
+			},
+		}
+	});
+</script>
+
+@endsection

@@ -1,0 +1,34 @@
+{{--  Ad Display Component  --}}
+
+<div class="ad">
+	<img src="{{ ad.thumbmail }}" alt="">
+	<div class="content">
+		<div class="header">
+		<img height="32" width="32" src="{{ ad.platform.icon }}" class="platform" />
+			<h3 class="title">{{ ad.title }}</h3>
+		</div>
+		<span class="category">{{ ad.genre }}</span>
+		<span class="date">{{ ad.date }}</span>
+		<span class="price">{{ ad.price }}</span>
+		@if(ad.category.name == 'Game')
+			<i data-feather="key" class="icon"></i>
+			<i data-feather="key" class="icon1"></i>
+			<i data-feather="key" class="icon2"></i>
+		@endif
+		@if(ad.category.name == 'Account')
+			<i data-feather="user" class="icon"></i>
+			<i data-feather="user" class="icon1"></i>
+			<i data-feather="user" class="icon2"></i>
+		@endif
+		<a class="link" href="#">
+			<i data-feather="arrow-right"></i>
+		</a>
+	</div>
+</div>
+
+
+{{--  Usage exemple  --}}
+
+{{--  
+	@!component('components.ads.ad', ad=myad)
+	--}}

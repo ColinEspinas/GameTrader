@@ -103,6 +103,27 @@ document.addEventListener("DOMContentLoaded", function() {
 			resultsDiv.classList.remove("open");
 		}
 	});
+
+	// Close menu
+	document.querySelector(".close-btn").addEventListener("click", (e) => {
+		document.querySelector(".side-nav").style.transform = "translateX(-100%)";
+		document.querySelector(".side-nav").style.width = 0;
+		document.querySelector("main").style.width = "100%";
+		document.querySelector("main").style.marginLeft = 0;
+		document.querySelector(".menu-btn").style.marginRight = "25px";
+		document.querySelector(".menu-btn").style.opacity = "1";
+		document.querySelector(".menu-btn").style.width = "auto";
+	});
+
+	document.querySelector(".menu-btn").addEventListener("click", (e) => {
+		document.querySelector(".side-nav").style.transform = "translateX(0)";
+		document.querySelector(".side-nav").style.width = "320px";
+		document.querySelector("main").style.width = "calc(100% - 320px)";
+		document.querySelector("main").style.marginLeft = "320px";
+		document.querySelector(".menu-btn").style.marginRight = 0;
+		document.querySelector(".menu-btn").style.opacity = 0;
+		document.querySelector(".menu-btn").style.width = 0;
+	});
 });
 
 

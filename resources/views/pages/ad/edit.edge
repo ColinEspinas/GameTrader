@@ -1,0 +1,40 @@
+@layout('layouts.app')
+
+@section('extracss')
+{{ style('css/temporary') }}
+@endsection
+
+@section('title')
+GameTrader - Edit Ad
+@endsection
+
+@section('content')
+  <h1>Editing</h1>
+
+  <div class="editing-container">
+    @if(flashMessage('message'))
+        <span>{{ flashMessage('message') }}</span>
+    @endif
+      <form action="{{ route('AdController.update', { id: ad.id }) }}" method="POST">
+        {{ csrfField() }}
+
+        <label for="title">Title</label>
+        <input type="text" name="title" value="{{ ad.title }}">
+        @if(hasErrorFor('title'))
+            <span>
+                {{ getErrorFor('title') }}
+            </span>
+        @endif
+
+        <label for="content">Content</label>
+        <input type="text" name="content" value="{{ ad.content }}">
+        @if(hasErrorFor('content'))
+            <span>
+                {{ getErrorFor('content') }}
+            </span>
+        @endif
+
+        <button type="submit">Update Ad</button>
+      </form>
+  </div>
+@endsection

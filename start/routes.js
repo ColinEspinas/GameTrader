@@ -16,4 +16,38 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('pages.home')
+Route.get('/', 'HomeController.index');
+
+Route.on('/signup').render('pages.auth.signup');
+Route.post('/signup', 'UserController.create').validator('CreateUser');
+
+Route.on('/login').render('pages.auth.login');
+Route.post('/login', 'UserController.login').validator('LoginUser');
+
+Route.get('/logout', async ({ auth, response }) => {
+    await auth.logout();
+    return response.redirect('/');
+});
+
+Route.group(() => { 
+	Route.get("/:id/ads", 'AdController.userIndex');
+	Route.get("/ads", 'AdController.authUserIndex');
+
+	Route.get("/:id", 'UserController.show');
+
+	Route.get("/:id/edit", 'UserController.edit');
+	Route.put("/:id/edit", 'UserController.update');
+
+}).prefix('/user');
+
+Route.group(() => {
+	Route.get('/create', "AdController.create");
+	Route.post('/create', 'AdController.store').validator('PostAd');
+
+	Route.get("/:id", 'AdController.show');
+
+	Route.get('/delete/:id', 'AdController.delete');
+	
+	Route.get('/edit/:id', 'AdController.edit');
+    Route.post('/edit/:id', 'AdController.update').validator('PostAd');
+}).prefix('/ad');
