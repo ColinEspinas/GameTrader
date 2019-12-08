@@ -27,4 +27,7 @@ Route.post('/login', 'UserController.login').validator('LoginUser');
 Route.get('/logout', async ({ auth, response }) => {
     await auth.logout();
     return response.redirect('/');
-})
+});
+
+Route.on('/profile').render('pages.profile');
+Route.put('/profile', 'UserController.update');

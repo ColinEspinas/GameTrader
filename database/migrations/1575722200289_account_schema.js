@@ -13,6 +13,8 @@ class AccountSchema extends Schema {
       table.string('country', 60)
       table.integer('gameAmount')
       table.string('phoneNumber', 20)
+      table.integer('ad_id').unsigned().references('id').inTable('ads')
+      table.integer('platform_id').unsigned().references('id').inTable('platforms')
       table.timestamps()
     })
   }

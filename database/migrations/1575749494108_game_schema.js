@@ -1,0 +1,24 @@
+'use strict'
+
+/** @type {import('@adonisjs/lucid/src/Schema')} */
+const Schema = use('Schema')
+
+class GameSchema extends Schema {
+  up () {
+    this.create('games', (table) => {
+      table.increments()
+      table.float('price', 2)
+      table.string('key', 80)
+      table.integer('ad_id').unsigned().references('id').inTable('ads')
+      table.integer('account_id').unsigned().references('id').inTable('accounts')
+      table.integer('platform_id').unsigned().references('id').inTable('platforms')
+      table.timestamps()
+    })
+  }
+
+  down () {
+    this.drop('games')
+  }
+}
+
+module.exports = GameSchema

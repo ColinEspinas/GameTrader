@@ -3,7 +3,7 @@
 class CreateUser {
   get rules () {
     return {
-      'username': 'required|unique:users',
+      'username': 'required',
       'email': 'required|unique:users',
       'password': 'required'
     }

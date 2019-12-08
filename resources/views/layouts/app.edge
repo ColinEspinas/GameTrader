@@ -58,8 +58,12 @@
 				</div>
 				<ul class="menu">
 					<div class="title">Menu</div>
-					<li><a class="active" href=""><i data-feather="home"></i>Home</a></li>
+					<li><a class="active" href="/"><i data-feather="home"></i>Home</a></li>
+				@loggedIn
+					<li><a href="/profile"><i data-feather="user"></i>Profile</a></li>
+				@else
 					<li><a href=""><i data-feather="user"></i>Profile</a></li>
+				@endloggedIn
 				</ul>
 				<ul class="menu">
 					<div class="title">Account</div>

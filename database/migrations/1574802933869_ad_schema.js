@@ -6,11 +6,11 @@ const Schema = use('Schema')
 class AdSchema extends Schema {
   up () {
     this.create('ads', (table) => {
-	  table.increments()
-	  table.string('title', 100)
-	  table.text('content')
-	  table.integer('seller_id')
-	  table.boolean('isAccount')
+      table.increments()
+      table.string('title', 100)
+      table.text('content')
+      table.boolean('isAccount')
+      table.integer('user_id').unsigned().references('id').inTable('users')
       table.timestamps()
     })
   }
