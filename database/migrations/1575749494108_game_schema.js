@@ -7,11 +7,11 @@ class GameSchema extends Schema {
   up () {
     this.create('games', (table) => {
       table.increments()
-      table.float('price', 2)
       table.string('key', 80)
       table.integer('ad_id').unsigned().references('id').inTable('ads')
       table.integer('account_id').unsigned().references('id').inTable('accounts')
       table.integer('platform_id').unsigned().references('id').inTable('platforms')
+      table.integer('gamedata_id').unsigned()
       table.timestamps()
     })
   }

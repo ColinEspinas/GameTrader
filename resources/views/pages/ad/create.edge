@@ -30,6 +30,79 @@ GameTrader - Post Ad
             </span>
         @endif
 
+        <label for="price">Price</label>
+        <input type="number" step="0.01" name="price">
+        @if(hasErrorFor('price'))
+            <span>
+                {{ getErrorFor('price') }}
+            </span>
+        @endif
+
+        <label for="categoryID">Category</label>
+        <select name="categoryID">
+          <option value=0>--null--</option>
+          <option value=1>Game</option>
+          <option value=2>Account</option>
+        </select>
+        @if(hasErrorFor('categoryID'))
+            <span>
+                {{ getErrorFor('categoryID') }}
+            </span>
+        @endif
+
+        <h2>Game</h2>
+
+        <label for="gameName">Name</label>
+        <input type="text" name="gameName">
+        @if(hasErrorFor('gameName'))
+            <span>
+                {{ getErrorFor('gameName') }}
+            </span>
+        @endif
+
+        <label for="gameKey">Key</label>
+        <input type="text" name="gameKey">
+        @if(hasErrorFor('gameKey'))
+            <span>
+                {{ getErrorFor('gameKey') }}
+            </span>
+        @endif
+
+        <h2>Account</h2>
+
+        <label for="accountUsername">Username</label>
+        <input type="text" name="accountUsername">
+        @if(hasErrorFor('accountUsername'))
+            <span>
+                {{ getErrorFor('accountUsername') }}
+            </span>
+        @endif
+
+        <label for="accountPassword">Password</label>
+        <input type="password" name="accountPassword">
+        @if(hasErrorFor('accountPassword'))
+            <span>
+                {{ getErrorFor('accountPassword') }}
+            </span>
+        @endif
+
+        <label for="accountAvatar">Avatar</label>
+        <input type="text" name="accountAvatar">
+
+        <label for="accountCountry">Country</label>
+        <input type="text" name="accountCountry">
+
+        <label for="accountPhone">Phone</label>
+        <input type="tel" name="accountPhone">
+
+        <label for="accountGAmount">Game Amount</label>
+        <input type="number" name="accountGAmount" value=0>
+        @if(hasErrorFor('accountGAmount'))
+            <span>
+                {{ getErrorFor('accountGAmount') }}
+            </span>
+        @endif
+
         <button type="submit">Post</button>
       </form>
   </div>
