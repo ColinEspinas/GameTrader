@@ -9,19 +9,8 @@
 @endsection
 
 @section('content')
-  <h1>My Ads</h1>
-
-  @each(ad in ads)
-  <div class="posting-container2">
-    <div class="blank"></div>
-    <div class="ad">
-    <h3>{{ ad.title }}</h3>
-    <p>{{ ad.content }}</p>
-    <ul>
-      <li><a href="{{ route('AdController.delete', { id: ad.id }) }}">Delete</a></li>
-      <li><a href="{{ route('AdController.edit', { id: ad.id }) }}">Edit</a></li>
-    </ul>
-    </div>
-  </div>
-  @endeach
+<div class="main-container">
+	<h1>My Ads</h1>
+	@!component('components.ads.ads-display', ads=ads, user=auth.user)
+</div>
 @endsection

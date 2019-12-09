@@ -2,6 +2,7 @@
 
 const User = use('App/Models/User');
 const { validate } = use('Validator');
+const { formatDistance } = require('date-fns');
 
 class UserController {
     async create({ request, response, auth }) {
@@ -24,13 +25,25 @@ class UserController {
     }
 
 	async show({ view, params }) {
-		const user = await User.find(params.id);
-		return view.render('pages.user.profile', { user : user.toJSON() });
+        const user = await User.find(params.id);
+        const ads = await user.ads()
+            .with('product')
+            .with('category')
+            .with('platform')
+            .fetch();
+
+        const userAds = ads.toJSON().map(ad => {
+            ad.product.genres = JSON.parse(ad.product.genres);
+            ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
+            return ad;
+        });
+
+		return view.render('pages.user.profile', { user : user, ads : userAds });
 	}
 
 	async edit({ view, params }) {
 		const user = await User.find(params.id);
-		return view.render('pages.user.profile', { user : user.toJSON() });
+		return view.render('pages.user.settings', { user : user.toJSON() });
 	}
 
     async update({ request, response, session, params }) {

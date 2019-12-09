@@ -1,15 +1,21 @@
 {{--  Ad Display Component  --}}
 
 <div class="ad">
-	<img src="{{ ad.thumbmail }}" alt="">
+	<img src="{{ ad.thumbnail }}" alt="">
 	<div class="content">
 		<div class="header">
-		<img height="32" width="32" src="{{ ad.platform.icon }}" class="platform" />
-			<h3 class="title">{{ ad.title }}</h3>
+		<a href="/ad/{{ ad.id }}">
+			<img height="32" width="32" src="{{ ad.platform.icon }}" class="platform" />
+		</a>
+		<h3 class="title"><a href="/ad/{{ ad.id }}">{{ ad.title }}</a></h3>
 		</div>
-		<span class="category">{{ ad.genre }}</span>
+		<span class="genres">
+		@each(genre in ad.product.genres)
+			<span class="genre">{{ genre }}</span>
+		@endeach
+		</span>
 		<span class="date">{{ ad.date }}</span>
-		<span class="price">{{ ad.price }}</span>
+		<span class="price">{{ ad.price }}€</span>
 		@if(ad.category.name == 'Game')
 			<i data-feather="key" class="icon"></i>
 			<i data-feather="key" class="icon1"></i>
@@ -20,15 +26,21 @@
 			<i data-feather="user" class="icon1"></i>
 			<i data-feather="user" class="icon2"></i>
 		@endif
-		<a class="link" href="#">
+		<a class="link" href="/ad/{{ ad.id }}">
 			<i data-feather="arrow-right"></i>
 		</a>
 	</div>
+	@if(ad.user_id == user.id)
+		<ul class="user-controls">
+			<li><a href="{{ route('AdController.delete', { id: ad.id }) }}"><i data-feather="trash"></i></a></li>
+			<li><a href="{{ route('AdController.edit', { id: ad.id }) }}"><i data-feather="edit"></i></a></li>
+		</ul>
+	@endif
 </div>
 
 
 {{--  Usage exemple  --}}
 
 {{--  
-	@!component('components.ads.ad', ad=myad)
-	--}}
+	@!component('components.ads.ad', ad=myad, user=auth.user)
+--}}

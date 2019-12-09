@@ -9,10 +9,9 @@
 	<div class="ad-main-content lil-col 9-12">
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
-				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
-				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
-				<div class="swiper-slide ad-pic" style="background-image: url('https://media.rawg.io/media/games/4a0/4a0a1316102366260e6f38fd2a9cfdce.jpg')"></div>
+				@each(image in ad.images)
+				<div class="swiper-slide ad-pic" style="background-image: url('{{ image }}')"></div>
+				@endeach
 			</div>
 
 			<!-- Add Pagination -->
@@ -26,20 +25,18 @@
 	<div class="ad-seller lil-col 3-12">
 		<div class="container">
 			<div class="avatar">
-				<a href="#">
+				<a href="/user/{{ seller.id }}">
 					<img src="/avatar.jpg" alt="">
 				</a>
 			</div>
 			<div class="infos">
-				<span class="name">Colin E.</span>
-				<span class="rating">Rating: 4.76/5</span>
+				<span class="name">{{ seller.username }}</span>
+				{{--  <span class="rating">Rating: 4.76/5</span>  --}}
 			</div>
 		</div>
 		<div class="ad-infos">
-			<h3 class="title">Grand Theft Auto IV</h3>
-			<p class="desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae voluptatem exercitationem a deleniti, 
-				molestias cum explicabo vitae, fugiat eos laboriosam sunt nam laudantium accusantium possimus veniam harum corrupti
-				 quaerat ratione.</p>
+			<h3 class="title">{{ ad.title }}</h3>
+			<p class="desc">{{ ad.content }}</p>
 		</div>
 		<div class="contact">
 			<a class="highlight-btn center width-75 margin-tb-15"><span>Contact<i data-feather="mail"></i></span></a>

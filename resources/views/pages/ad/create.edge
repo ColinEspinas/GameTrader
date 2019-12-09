@@ -40,13 +40,26 @@ GameTrader - Post Ad
 
         <label for="categoryID">Category</label>
         <select name="categoryID">
-          <option value=0>--null--</option>
-          <option value=1>Game</option>
-          <option value=2>Account</option>
+          <option value="0">Choose a category</option>
+          <option value="1">Game</option>
+          <option value="2">Account</option>
         </select>
         @if(hasErrorFor('categoryID'))
             <span>
                 {{ getErrorFor('categoryID') }}
+            </span>
+		@endif
+		
+		<label for="platform">Platform</label>
+        <select name="platform">
+				<option value="0">Choose a platform</option>
+				@each(platform in platforms)
+					<option value="{{ platform.id }}">{{ platform.name }}</option>
+				@endeach
+		</select>
+        @if(hasErrorFor('platform'))
+            <span>
+                {{ getErrorFor('platform') }}
             </span>
         @endif
 

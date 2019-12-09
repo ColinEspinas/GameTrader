@@ -15,7 +15,7 @@ GameTrader - Edit Ad
     @if(flashMessage('message'))
         <span>{{ flashMessage('message') }}</span>
     @endif
-      <form action="{{ route('AdController.update', { id: ad.id }) }}" method="POST">
+      <form action="/ad/{{ ad.id }}/edit?_method=PUT" method="POST">
         {{ csrfField() }}
 
         <label for="title">Title</label>
@@ -34,7 +34,73 @@ GameTrader - Edit Ad
             </span>
         @endif
 
+        <label for="price">Price</label>
+        <input type="number" step="0.01" name="price" value="{{ ad.price }}">
+        @if(hasErrorFor('price'))
+            <span>
+                {{ getErrorFor('price') }}
+            </span>
+        @endif
+
+        @if(ad.category_id == 1)
+          <h2>Game</h2>
+
+          <label for="gameName">Name</label>
+          <input type="text" name="gameName" value="{{ ad.gameName }}">
+          @if(hasErrorFor('gameName'))
+              <span>
+                  {{ getErrorFor('gameName') }}
+              </span>
+          @endif
+
+          <label for="gameKey">Key</label>
+          <input type="text" name="gameKey" value="{{ ad.gameKey }}">
+          @if(hasErrorFor('gameKey'))
+              <span>
+                  {{ getErrorFor('gameKey') }}
+              </span>
+          @endif
+        
+        @elseif(ad.category_id == 2)
+          <h2>Account</h2>
+
+          <label for="accountUsername">Username</label>
+          <input type="text" name="accountUsername">
+          @if(hasErrorFor('accountUsername'))
+              <span>
+                  {{ getErrorFor('accountUsername') }}
+              </span>
+          @endif
+
+          <label for="accountPassword">Password</label>
+          <input type="password" name="accountPassword">
+          @if(hasErrorFor('accountPassword'))
+              <span>
+                  {{ getErrorFor('accountPassword') }}
+              </span>
+          @endif
+
+          <label for="accountAvatar">Avatar</label>
+          <input type="text" name="accountAvatar" value="{{ ad.accountAvatar }}">
+
+          <label for="accountCountry">Country</label>
+          <input type="text" name="accountCountry" value="{{ ad.accountCountry }}">
+
+          <label for="accountPhone">Phone</label>
+            <input type="tel" name="accountPhone" value="{{ ad.accountPhone }}">
+
+          <label for="accountGAmount">Game Amount</label>
+          <input type="number" name="accountGAmount" value="{{ ad.accountGAmount }}">
+          @if(hasErrorFor('accountGAmount'))
+              <span>
+                  {{ getErrorFor('accountGAmount') }}
+              </span>
+          @endif
+        
+        @endif
+
         <button type="submit">Update Ad</button>
+
       </form>
   </div>
 @endsection

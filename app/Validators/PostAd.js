@@ -6,7 +6,8 @@ class PostAd {
       'title': 'required',
       'content': 'required',
       'price': 'required|above:0',
-      'categoryID': 'above:0'
+      'categoryID': 'above:0',
+      'platform': 'required'
     }
   }
 
