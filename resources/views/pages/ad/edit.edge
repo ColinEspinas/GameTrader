@@ -15,7 +15,7 @@ GameTrader - Edit Ad
     @if(flashMessage('message'))
         <span>{{ flashMessage('message') }}</span>
     @endif
-      <form action="{{ route('AdController.update', { id: ad.id }) }}" method="POST">
+      <form action="/ad/{{ ad.id }}/edit?_method=PUT" method="POST">
         {{ csrfField() }}
 
         <label for="title">Title</label>

@@ -9,35 +9,29 @@
 @endsection
 
 @section('content')
-<div class="swiper-container">
-	<div class="swiper-wrapper">
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
-		<div class="swiper-slide ad-slide"></div>
+<div class="home-container">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+			<div class="swiper-slide ad-slide"></div>
+		</div>
+
+		<!-- Add Pagination -->
+		<div class="swiper-pagination"></div>
+
+		<!-- Add Arrows -->
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
 	</div>
 
-	<!-- Add Pagination -->
-	<div class="swiper-pagination"></div>
-
-	<!-- Add Arrows -->
-	<div class="swiper-button-next"></div>
-	<div class="swiper-button-prev"></div>
-</div>
-
-
-<div class="ads-container">
-	<h2 class="title">Recent Ads</h2>
-	<hr>
-	@each(ad in ads)
-		@!component('components.ads.ad', ad=ad)
-	@endeach
-	
+	@!component('components.ads.ads-display',title='Recent Ads', ads=ads)
 </div>
 
 @endsection

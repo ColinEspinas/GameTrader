@@ -9,37 +9,36 @@
 @endsection
 
 @section('content')
-  <h1>Join now</h1>
+<div class="main-container">
+	<h1>Join now</h1>
+	<p>Register using the form below and join the GameTrader community to trade your games and accounts.</p>
+	<div class="identification-container">
+		<form action="{{ route('UserController.create') }}" method="POST">
+			{{ csrfField() }}
 
-  <div class="identification-container">
-      <form action="{{ route('UserController.create') }}" method="POST">
-        {{ csrfField() }}
+			<input type="text" name="username" value="{{ old('username', '') }}" placeholder="Username" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('username'))
+				<span>
+					{{ getErrorFor('username') }}
+				</span>
+			@endif
 
-        <label for="username">Username</label>
-        <input type="text" name="username" value="{{ old('username', '') }}">
-        @if(hasErrorFor('username'))
-            <span>
-                {{ getErrorFor('username') }}
-            </span>
-        @endif
+			<input type="email" name="email" value="{{ old('email', '') }}" placeholder="Email" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('email'))
+				<span>
+					{{ getErrorFor('email') }}
+				</span>
+			@endif
 
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ old('email', '') }}">
-        @if(hasErrorFor('email'))
-            <span>
-                {{ getErrorFor('email') }}
-            </span>
-        @endif
+			<input type="password" name="password" placeholder="Password" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('password'))
+				<span>
+					{{ getErrorFor('password') }}
+				</span>
+			@endif
 
-        <label for="password">Password</label>
-        <input type="password" name="password">
-        @if(hasErrorFor('password'))
-            <span>
-                {{ getErrorFor('password') }}
-            </span>
-        @endif
-
-        <button type="submit">Join now</button>
-      </form>
-  </div>
+			<button type="submit" class="highlight-btn margin-tb-5 width-25 right">Join now</button>
+		</form>
+	</div>
+</div>
 @endsection

@@ -46,8 +46,8 @@ Route.group(() => {
 
 	Route.get("/:id", 'AdController.show');
 
-	Route.get('/delete/:id', 'AdController.delete');
+	Route.get('/:id/delete', 'AdController.delete');
 	
-	Route.get('/edit/:id', 'AdController.edit');
-    Route.post('/edit/:id', 'AdController.update').validator('PostAd');
+	Route.get('/:id/edit', 'AdController.edit');
+    Route.put('/:id/edit', 'AdController.update');
 }).prefix('/ad');

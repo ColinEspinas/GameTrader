@@ -48,7 +48,7 @@
 				@loggedIn
 				<div class="user-section">
 					<div class="avatar">
-						<a href="#">
+						<a href="/user/{{ auth.user.id }}">
 							<img src="/avatar.jpg" alt="">
 						</a>
 					</div>
@@ -63,18 +63,19 @@
 				</div>
 				<ul class="menu">
 					<div class="title">Menu</div>
-					<li><a class="active" href="/"><i data-feather="home"></i>Home</a></li>
+					<li><a class="{{ (url == '/') ? 'active' : '' }}" href="/"><i data-feather="home"></i>Home</a></li>
 				@loggedIn
-				<li><a href="/user/{{ auth.user.id }}"><i data-feather="user"></i>Profile</a></li>
-				<li><a href="/user/ads"><i data-feather="file-text"></i>My Ads</a></li>
+				<li><a class="{{ (url == '/user/' + auth.user.id) ? 'active' : '' }}" href="/user/{{ auth.user.id }}"><i data-feather="user"></i>Profile</a></li>
+				<li><a class="{{ (url == '/user/ads') ? 'active' : '' }}" href="/user/ads"><i data-feather="file-text"></i>My Ads</a></li>
+				<li><a class="{{ (url == '/user/' + auth.user.id + '/edit') ? 'active' : '' }}" href="/user/{{ auth.user.id }}/edit"><i data-feather="tool"></i>Settings</a></li>
 				@endloggedIn
 				</ul>
 				<ul class="menu">
 				@loggedIn
 					<li><a href="/logout"><i data-feather="log-out"></i>Log out</a></li>
 				@else
-					<li><a href="/login"><i data-feather="log-in"></i>Log in</a></li>
-					<li><a href="/signup"><i data-feather="user-plus"></i>Sign up</a></li>
+					<li><a class="{{ (url == '/login') ? 'active' : '' }}" href="/login"><i data-feather="log-in"></i>Log in</a></li>
+					<li><a class="{{ (url == '/signup') ? 'active' : '' }}" href="/signup"><i data-feather="user-plus"></i>Sign up</a></li>
 				@endloggedIn
 				</ul>
 			</div>

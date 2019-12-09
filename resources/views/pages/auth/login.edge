@@ -9,32 +9,29 @@
 @endsection
 
 @section('content')
-  <h1>Login now</h1>
+<div class="main-container">
+	<h1>Login now</h1>
+	<div class="identification-container">
+		@if(flashMessage('loginError'))
+			<span>{{ flashMessage('loginError') }}</span>
+		@endif
+		<form action="{{ route('UserController.login') }}" method="POST" clas="login-form">
+			{{ csrfField() }}
+			<input type="email" name="email" value="{{ old('email', '') }}" placeholder="Email" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('email'))
+				<span>
+					{{ getErrorFor('email') }}
+				</span>
+			@endif
+			<input type="password" name="password" placeholder="Password" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('password'))
+				<span>
+					{{ getErrorFor('password') }}
+				</span>
+			@endif
 
-  <div class="identification-container">
-    @if(flashMessage('loginError'))
-        <span>{{ flashMessage('loginError') }}</span>
-    @endif
-      <form action="{{ route('UserController.login') }}" method="POST">
-        {{ csrfField() }}
-
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ old('email', '') }}">
-        @if(hasErrorFor('email'))
-            <span>
-                {{ getErrorFor('email') }}
-            </span>
-        @endif
-
-        <label for="password">Password</label>
-        <input type="password" name="password">
-        @if(hasErrorFor('password'))
-            <span>
-                {{ getErrorFor('password') }}
-            </span>
-        @endif
-
-        <button type="submit">Login now</button>
-      </form>
-  </div>
+			<button type="submit" class="highlight-btn margin-tb-5 width-25 right">Log in</button>
+		</form>
+	</div>
+</div>
 @endsection

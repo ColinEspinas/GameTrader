@@ -1,0 +1,19 @@
+{{--  Ads Display Component  --}}
+	
+<div class="ads-container">
+	@if(title)
+	<h2 class="title">{{ title }}</h2>
+	<hr>
+	@endif
+	
+	@each(ad in ads)
+		@!component('components.ads.ad', ad=ad, user=user)
+	@endeach
+</div>
+
+	
+{{--  Usage exemple  --}}
+	
+{{--  
+	@!component('components.ads.ads-display',title='Recent Ads', ads=myads, user=auth.user)
+--}}
