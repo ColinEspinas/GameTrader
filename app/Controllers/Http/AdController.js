@@ -42,7 +42,7 @@ class AdController {
 	}
 
     async store({ request, response, auth, session }) {
-        // try {
+        try {
             await auth.check();
             const category = await Category.find(request.input('categoryID'));
             let rules = {};
@@ -122,10 +122,10 @@ class AdController {
             await ad.save();
 
             return response.redirect('/ad/create');
-        // } catch (error) {
-        //     session.flash({ message: 'You must be logged to post !' })
-        //     return response.redirect('/ad/create');
-        // }
+        } catch (error) {
+            session.flash({ message: 'You must be logged to post !' })
+            return response.redirect('/ad/create');
+        }
     }
 
     async authUserIndex({ view, auth }) {
@@ -190,25 +190,93 @@ class AdController {
     }
 
     async edit({ params, auth, view }) {
-		const ad = await Ad.find(params.id);
+        const ad = await Ad.query().with('product').where('id', params.id).first();
 		if (ad.user_id === auth.user.id) {
-			return view.render('pages.ad.edit', { ad : ad });
+			return view.render('pages.ad.edit', { ad : ad.toJSON() });
 		}
     }
 
     async update({ response, auth, request, session, params }) {
-		
-		const ad = await Ad.find(params.id);
-		if (ad.user_id === auth.user.id) {
+        
+        try {
+            await auth.check();
+            let rules = {};
+            const ad = await Ad.find(params.id);
 
-			ad.title = request.input('title');
-			ad.content = request.input('content');
+            // Rules
+            switch (ad.category_id)
+            {
+                case 1:
+                    rules = {
+                        'gameName': 'required',
+						'gameKey': 'required',
+                    }
+                    break;
 
-			await ad.save();
+                case 2:
+                    rules = {
+                        'accountUsername': 'required',
+                        'accountPassword': 'required',
+                        'accountGAmount': 'required|above:0'
+                    }
+                    break;
 
-			session.flash({ message: 'Your Ad has been updated.' });
-			return response.redirect('/user/ads');
-		}
+                default:
+                    session.flash({ message: 'Category could not be found...' })
+                    return response.redirect(`/ad/${params.id}/edit`);
+            }
+
+            // Validations
+            const validation = await validate(request.all(), rules);
+            if (validation.fails()) {
+                session
+                    .withErrors(validation.messages())
+                    .flashAll()
+                
+                return response.redirect(`/ad/${params.id}/edit`);
+            }
+
+            // Update
+            ad.title = request.input('title');
+            ad.content = request.input('content');
+            ad.price = request.input('price');
+            switch (ad.category_id)
+            {
+                case 1:
+                    const game = await Game.find(ad.product_id)
+                    game.key = request.input('gameKey');
+                    await fetch('https://api.rawg.io/api/games?page=1&page_size=1&search=' + request.input('gameName'))
+                        .then(res => res.json())
+                        .then(json => { 
+                            game.gamedata_id = json.results[0].id;
+							ad.thumbnail = json.results[0].background_image;
+							game.genres = JSON.stringify(json.results[0].genres.map(genre => {
+								return genre.name;
+							}));
+                         });
+                    await game.save();
+                    break;
+
+                case 2:
+                    const account = await Account.find(ad.product_id);
+                    account.username = request.input('accountUsername');
+                    account.password = request.input('accountPassword');
+                    account.avatar = request.input('accountAvatar');
+                    account.country = request.input('accountCountry');
+                    account.phoneNumber = request.input('accountPhone');
+                    account.gameAmount = request.input('accountGAmount');
+                    await account.save();
+                    break;
+
+                default: break;
+            }
+            await ad.save();
+
+            return response.redirect('/user/ads');
+        } catch (error) {
+            session.flash({ message: 'You must be logged to post !' })
+            return response.redirect(`/ad/${params.id}/edit`);
+        }
     }
 }
 

@@ -46,7 +46,7 @@ GameTrader - Edit Ad
           <h2>Game</h2>
 
           <label for="gameName">Name</label>
-          <input type="text" name="gameName" value="{{ ad.gameName }}">
+          <input type="text" name="gameName" value="">
           @if(hasErrorFor('gameName'))
               <span>
                   {{ getErrorFor('gameName') }}
@@ -54,7 +54,7 @@ GameTrader - Edit Ad
           @endif
 
           <label for="gameKey">Key</label>
-          <input type="text" name="gameKey" value="{{ ad.gameKey }}">
+          <input type="text" name="gameKey" value="{{ ad.product.key }}">
           @if(hasErrorFor('gameKey'))
               <span>
                   {{ getErrorFor('gameKey') }}
@@ -65,7 +65,7 @@ GameTrader - Edit Ad
           <h2>Account</h2>
 
           <label for="accountUsername">Username</label>
-          <input type="text" name="accountUsername">
+          <input type="text" name="accountUsername" value="{{ ad.product.username }}">
           @if(hasErrorFor('accountUsername'))
               <span>
                   {{ getErrorFor('accountUsername') }}
@@ -73,7 +73,7 @@ GameTrader - Edit Ad
           @endif
 
           <label for="accountPassword">Password</label>
-          <input type="password" name="accountPassword">
+          <input type="password" name="accountPassword" value="{{ ad.product.password }}">
           @if(hasErrorFor('accountPassword'))
               <span>
                   {{ getErrorFor('accountPassword') }}
@@ -81,16 +81,16 @@ GameTrader - Edit Ad
           @endif
 
           <label for="accountAvatar">Avatar</label>
-          <input type="text" name="accountAvatar" value="{{ ad.accountAvatar }}">
+          <input type="text" name="accountAvatar" value="{{ ad.product.avatar }}">
 
           <label for="accountCountry">Country</label>
-          <input type="text" name="accountCountry" value="{{ ad.accountCountry }}">
+          <input type="text" name="accountCountry" value="{{ ad.product.country }}">
 
           <label for="accountPhone">Phone</label>
-            <input type="tel" name="accountPhone" value="{{ ad.accountPhone }}">
+            <input type="tel" name="accountPhone" value="{{ ad.product.phone }}">
 
           <label for="accountGAmount">Game Amount</label>
-          <input type="number" name="accountGAmount" value="{{ ad.accountGAmount }}">
+          <input type="number" name="accountGAmount" value="{{ ad.product.gameAmount }}">
           @if(hasErrorFor('accountGAmount'))
               <span>
                   {{ getErrorFor('accountGAmount') }}
