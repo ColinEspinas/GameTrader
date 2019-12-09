@@ -709,6 +709,11 @@ main {
 				white-space: nowrap;
 				word-break: break-all;
 				width: 100%;
+
+				a {
+					color: color(dark);
+					text-decoration: none;
+				}
 			}
 
 			.price {
@@ -860,6 +865,7 @@ main {
 		padding: 25px;
 		display: flex;
 		border-bottom: 1px solid rgba(color(dark), 0.1);
+		align-items: center;
 
 		.avatar img {
 			width: 50px;
@@ -915,5 +921,35 @@ main {
 	transition: border 200ms ease;
 	&:focus {
 		border: 1px solid color(primary);
+	}
+}
+
+.user-info {
+	border-radius: 5px;
+	padding: 25px;
+	box-shadow: 0 0 50px -10px rgba(color(dark), 0.2);
+	display: flex;
+	align-items: center;
+	.avatar img {
+		width: 50px;
+		height: 50px;
+		object-fit: cover;
+		border-radius: 50%;
+		vertical-align: middle;
+	}
+
+	.infos {
+		display: block;
+		margin-left: 25px;
+		.name {
+			display: block;
+			font-weight: bold;
+			font-size: 1.25em;
+		}
+		.rating {
+			display: block;
+			font-size: 0.8em;
+			color: rgba(color(dark), 0.5);
+		}
 	}
 }

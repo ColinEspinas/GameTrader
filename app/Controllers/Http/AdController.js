@@ -8,9 +8,33 @@ const Account = use('App/Models/Account');
 const Platform = use('App/Models/Platform');
 const { validate } = use('Validator');
 const fetch = require('node-fetch');
-const { formatDistance, subDays } = require('date-fns');
+const { formatDistance } = require('date-fns');
 
 class AdController {
+
+    async show({ view, params }) {
+		let ad = await Ad.find(params.id);
+		let product = await ad.product().fetch();
+		switch (ad.category_id)
+		{
+			case 1:
+				await fetch(`https://api.rawg.io/api/games/${product.gamedata_id}/screenshots`)
+					.then(res => res.json())
+					.then(json => { 
+						ad.images = json.results.map(screenshot => {
+							return screenshot.image;
+						});
+					});
+				break;
+
+			case 2:
+				break;
+
+			default: break;
+		}
+        const seller = await User.find(ad.user_id);
+        return view.render('pages.ad.show', { ad : ad, seller : seller });
+    }
 
 	async create({ view }) {
 		const platforms = await Platform.all();

@@ -546,6 +546,9 @@ main {
         white-space: nowrap;
         word-break: break-all;
         width: 100%; }
+        .ads-container .ad .content .title a {
+          color: #101417;
+          text-decoration: none; }
       .ads-container .ad .content .price {
         color: #1C3FFD;
         font-size: 1.5em; }
@@ -651,7 +654,8 @@ main {
   .ad-seller .container {
     padding: 25px;
     display: flex;
-    border-bottom: 1px solid rgba(16, 20, 23, 0.1); }
+    border-bottom: 1px solid rgba(16, 20, 23, 0.1);
+    align-items: center; }
     .ad-seller .container .avatar img {
       width: 50px;
       height: 50px;
@@ -694,4 +698,28 @@ main {
   transition: border 200ms ease; }
   .input:focus {
     border: 1px solid #1C3FFD; }
+
+.user-info {
+  border-radius: 5px;
+  padding: 25px;
+  box-shadow: 0 0 50px -10px rgba(16, 20, 23, 0.2);
+  display: flex;
+  align-items: center; }
+  .user-info .avatar img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    vertical-align: middle; }
+  .user-info .infos {
+    display: block;
+    margin-left: 25px; }
+    .user-info .infos .name {
+      display: block;
+      font-weight: bold;
+      font-size: 1.25em; }
+    .user-info .infos .rating {
+      display: block;
+      font-size: 0.8em;
+      color: rgba(16, 20, 23, 0.5); }
 

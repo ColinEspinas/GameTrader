@@ -9,46 +9,19 @@
 @endsection
 
 @section('content')
-  <h1>Profile</h1>
-
-  <div class="profile-container">
-  <form action="/user/{{ auth.user.id }}/edit?_method=PUT" method="POST">
-        {{ csrfField() }}
-
-        <label for="username">Username</label>
-        <input type="username" name="username" value="{{ old('username') }}">
-        @if(hasErrorFor('username'))
-            <span>
-                {{ getErrorFor('username') }}
-            </span>
-        @endif
-
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ old('email') }}">
-        @if(hasErrorFor('email'))
-            <span>
-                {{ getErrorFor('email') }}
-            </span>
-        @endif
-
-        <label for="password">Previous Password</label>
-        <input type="password" name="password" value="">
-        @if(hasErrorFor('password'))
-            <span>
-                {{ getErrorFor('password') }}
-            </span>
-        @endif
-
-        <label for="passwordNew">New Password</label>
-        <input type="password" name="passwordNew">
-
-        <label for="avatar">Avatar</label>
-        <input type="avatar" name="avatar" value="{{ old('avatar', '') }}">
-
-        <label for="bio">Description</label>
-        <input type="bio" name="bio" value="{{ old('bio', '') }}">
-
-        <button type="submit">Update Profile</button>
-      </form>
-  </div>
+<div class="main-container">
+	{{--  <h1>Profile</h1>  --}}
+	<div class="user-info">
+		<div class="avatar">
+				<a href="/user/{{ auth.user.id }}">
+					<img src="/avatar.jpg" alt="">
+				</a>
+		</div>
+		<div class="infos">
+			<span class="name">{{ auth.user.username }}</span>
+			{{--  <span class="rating">Rating: 4.76/5</span>  --}}
+		</div>
+	</div>
+	@!component('components.ads.ads-display',title='Ads', ads=ads, user=auth.user)
+</div>
 @endsection
