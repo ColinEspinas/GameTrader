@@ -51,3 +51,9 @@ Route.group(() => {
 	Route.get('/:id/edit', 'AdController.edit');
     Route.put('/:id/edit', 'AdController.update');
 }).prefix('/ad');
+
+
+
+// TO REMOVE
+Route.get('/upload', 'UploadController.index');
+Route.post('/upload', 'UploadController.upload');
