@@ -94,8 +94,10 @@ class SearchController {
 					for (const ad of tmpResults) {
 						if (!isInAds(results, ad.id)) {
 							if (stringSimilarity.compareTwoStrings(ad.title, searchValue) > 0.2) {
-								let games = await Game.query().where("account_id", ad.account.id).fetch();
-								ad.account.games = games.toJSON();
+								if (ad.category_id == 2) {
+									let games = await Game.query().where("account_id", ad.account.id).fetch();
+									ad.account.games = games.toJSON();
+								}
 								results.push(ad);
 							} 
 							else {
