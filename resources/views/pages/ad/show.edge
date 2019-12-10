@@ -43,6 +43,7 @@ GameTrader - Ad - {{ ad.title }}
 			<p class="content">{{ ad.content }}</p>
 		</div>
 		<div class="product-info">
+				<span class="category-title"><b>{{ ad.category.name }}</b><span>
 			@if(ad.category_id == 1)
 				<span class="game-title block"><b>{{ ad.gameName }}</b></span>
 				<span class="genres block">

@@ -13,7 +13,7 @@ const { formatDistance } = require('date-fns');
 class AdController {
 
     async show({ view, params }) {
-		let ad = await Ad.find(params.id);
+		let ad = await Ad.query().with('category').where('id', params.id).first();
 		let product = await ad.product().fetch();
 		switch (ad.category_id)
 		{
@@ -49,7 +49,7 @@ class AdController {
 			default: break;
 		}
         const seller = await User.find(ad.user_id);
-        return view.render('pages.ad.show', { ad : ad, product : product , seller : seller });
+        return view.render('pages.ad.show', { ad : ad.toJSON(), product : product , seller : seller });
     }
 
 	async create({ view }) {
@@ -261,7 +261,7 @@ class AdController {
 				break;
 		}
 		if (ad.user_id === auth.user.id) {
-			return view.render('pages.ad.edit', { ad : ad.toJSON() });
+			return view.render('pages.ad.edit', { ad : ad });
 		}
     }
 

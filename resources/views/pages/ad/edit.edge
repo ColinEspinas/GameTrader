@@ -36,7 +36,10 @@ GameTrader - Edit - {{ ad.title }}
 
 			@if(ad.category_id == 1)
 			<h2>Game</h2>
-			<input type="text" name="gameName" value="{{ ad.product.name }}" placeholder="Game Name" class="input width-100 margin-tb-5">
+			<div class="search">
+				<input type="text" name="gameName" placeholder="Name" id="game-bar" class="input width-100 margin-tb-5" autocomplete="off">
+				<ul class="results-ad-games"></ul>
+			</div>
 			@if(hasErrorFor('gameName'))
 				<span>
 					{{ getErrorFor('gameName') }}

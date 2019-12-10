@@ -28,7 +28,8 @@ class UserController {
 	async show({ view, params }) {
         const user = await User.find(params.id);
         const ads = await user.ads()
-            .with('product')
+			.with('game')
+			.with('account')
             .with('category')
 			.with('platform')
 			.orderBy('updated_at', 'desc')
@@ -37,7 +38,11 @@ class UserController {
         const userAds = ads.toJSON().map(ad => {
             switch(ad.category_id) {
 				case 1:
+					ad.product = ad.game;
 					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+				case 2:
+					ad.product = ad.account;
 					break;
 			}
             ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
