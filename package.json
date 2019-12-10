@@ -8,7 +8,9 @@
     "start": "node server.js",
     "test": "node ace test",
     "webpack": "webpack",
-    "watch": "webpack --mode=development --watch"
+	"watch": "webpack --mode=development --watch",
+	"serve": "adonis serve",
+	"migrate": "adonis migration:refresh"
   },
   "keywords": [
     "adonisjs",
@@ -36,6 +38,7 @@
     "string-similarity": "^3.0.0"
   },
   "devDependencies": {
+    "@adonisjs/cli": "^4.0.12",
     "css-loader": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
