@@ -4,6 +4,11 @@
 const Model = use('Model')
 
 class Game extends Model {
+
+	account() {
+		return this.belongsTo('App/Models/Account');
+	}
+
 }
 
 module.exports = Game

@@ -5,8 +5,7 @@
 @endsection
 
 @section('content')
-<div class="lil-row">
-	<div class="ad-main-content lil-col 9-12">
+	<div class="ad-main-content">
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
 				@each(image in ad.images)
@@ -22,27 +21,39 @@
 			<div class="swiper-button-prev"></div>
 		</div>
 	</div>
-	<div class="ad-seller lil-col 3-12">
-		<div class="container">
+	<div class="main-container">
+		<div class="user-info">
 			<div class="avatar">
-				<a href="/user/{{ seller.id }}">
-					<img src="/avatar.jpg" alt="">
-				</a>
+					<a href="/user/{{ seller.id }}">
+						<img src="{{ (seller.avatar) ? seller.avatar : '/avatar.jpg' }}" alt="">
+					</a>
 			</div>
 			<div class="infos">
 				<span class="name">{{ seller.username }}</span>
 				{{--  <span class="rating">Rating: 4.76/5</span>  --}}
 			</div>
+			<a class="highlight-btn contact-btn" href="mailto:{{ seller.email }}"><span>Contact<i data-feather="mail"></i></span></a>
 		</div>
-		<div class="ad-infos">
-			<h3 class="title">{{ ad.title }}</h3>
-			<p class="desc">{{ ad.content }}</p>
+		<div class="ad-info">
+			<h2 class="title">{{ ad.title }}</h2>
+			<p class="content">{{ ad.content }}</p>
 		</div>
-		<div class="contact">
-			<a class="highlight-btn center width-75 margin-tb-15"><span>Contact<i data-feather="mail"></i></span></a>
+		<div class="product-info">
+			@if(ad.category_id == 1)
+				<span class="game-title block"><b>{{ ad.gameName }}</b></span>
+				<span class="genres block">
+				@each(genre in product.genres)
+					<span class="genre">{{ genre }}</span>
+				@endeach
+				</span>
+			@elseif(ad.category_id == 2)
+				<span class="game-count block">Amount of games: {{ product.gameAmount }}</span>
+				<span class="games-title block">Top Games: {{ ad.gameNames }}</span>
+			@else
+
+			@endif
 		</div>
 	</div>
-</div>
 @endsection
 
 @section('post-content-scripts')

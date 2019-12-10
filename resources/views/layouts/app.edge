@@ -49,7 +49,7 @@
 				<div class="user-section">
 					<div class="avatar">
 						<a href="/user/{{ auth.user.id }}">
-							<img src="/avatar.jpg" alt="">
+							<img src="{{ (auth.user.avatar) ? auth.user.avatar : '/avatar.jpg' }}" alt="">
 						</a>
 					</div>
 					<div class="infos">
@@ -84,7 +84,7 @@
 			<div class="header-bar">
 				<button class="menu-btn"><i data-feather="chevron-right"></i></button>
 				<div class="search">
-					<div id="example1" class="">
+					<div id="searchTaggle" class="input">
 					</div>
 					<ul class="results"></ul>
 				</div>

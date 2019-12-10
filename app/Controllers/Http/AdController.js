@@ -18,6 +18,7 @@ class AdController {
 		switch (ad.category_id)
 		{
 			case 1:
+				const game = await Game.query().where("ad_id", ad.id).first();
 				await fetch(`https://api.rawg.io/api/games/${product.gamedata_id}/screenshots`)
 					.then(res => res.json())
 					.then(json => { 
@@ -25,15 +26,30 @@ class AdController {
 							return screenshot.image;
 						});
 					});
+				product.genres = JSON.parse(product.genres);
+				ad.gameName = game.name;
 				break;
 
 			case 2:
+				const games = await Game.query().where("account_id", product.id).fetch();
+				ad.images = [];
+				ad.gameNames = [];
+				for (const game of games.toJSON()) {
+					await fetch(`https://api.rawg.io/api/games/${game.gamedata_id}/screenshots`)
+					.then(res => res.json())
+					.then(json => {
+						json.results.map(screenshot => {
+							ad.images.push(screenshot.image);
+						});
+					});
+					ad.gameNames.push(game.name);
+				}
 				break;
 
 			default: break;
 		}
         const seller = await User.find(ad.user_id);
-        return view.render('pages.ad.show', { ad : ad, seller : seller });
+        return view.render('pages.ad.show', { ad : ad, product : product , seller : seller });
     }
 
 	async create({ view }) {
@@ -42,8 +58,14 @@ class AdController {
 	}
 
     async store({ request, response, auth, session }) {
-        // try {
-            await auth.check();
+        try {
+			await auth.check();
+		} catch (error) {
+            session.flash({ message: 'You must be logged to post !' })
+            return response.redirect('/ad/create');
+		}
+
+		// try {
             const category = await Category.find(request.input('categoryID'));
             let rules = {};
 
@@ -94,7 +116,8 @@ class AdController {
                     await fetch('https://api.rawg.io/api/games?page=1&page_size=1&search=' + request.input('gameName'))
                         .then(res => res.json())
                         .then(json => { 
-                            game.gamedata_id = json.results[0].id;
+							game.gamedata_id = json.results[0].id;
+							game.name = json.results[0].name;
 							ad.thumbnail = json.results[0].background_image;
 							game.genres = JSON.stringify(json.results[0].genres.map(genre => {
 								return genre.name;
@@ -108,10 +131,26 @@ class AdController {
                     const account = await Account.create();
                     account.username = request.input('accountUsername');
                     account.password = request.input('accountPassword');
-                    account.avatar = request.input('accountAvatar');
-                    account.country = request.input('accountCountry');
-                    account.phoneNumber = request.input('accountPhone');
-                    account.gameAmount = request.input('accountGAmount');
+                    // account.country = request.input('accountCountry');
+					account.gameAmount = request.input('accountGAmount');
+					
+					for (const gameTag of request.input('accountGamesTags')) {
+						const game = await Game.create();
+						game.ad_id = ad.id;
+						await fetch('https://api.rawg.io/api/games?page=1&page_size=1&search=' + gameTag)
+							.then(res => res.json())
+							.then(json => {
+								game.name = json.results[0].name;
+								game.gamedata_id = json.results[0].id;
+								ad.thumbnail = json.results[0].background_image;
+								game.genres = JSON.stringify(json.results[0].genres.map(genre => {
+									return genre.name;
+								}));
+							});
+						game.account_id = account.id;
+						await game.save();
+					}
+
                     account.ad_id = ad.id;
                     await account.save();
                     ad.product_id = account.id;
@@ -121,11 +160,11 @@ class AdController {
             }
             await ad.save();
 
-            return response.redirect('/ad/create');
-        // } catch (error) {
-        //     session.flash({ message: 'You must be logged to post !' })
+			return response.redirect('/user/ads');
+		// } catch (error) {
+        //     session.flash({ message: 'Something is wrong with your ad.' })
         //     return response.redirect('/ad/create');
-        // }
+		// }
     }
 
     async authUserIndex({ view, auth }) {
@@ -133,10 +172,15 @@ class AdController {
 			.with('product')
 			.with('category')
 			.with('platform')
+			.orderBy('updated_at', 'desc')
 			.fetch()
 		
 		const userAds = ads.toJSON().map(ad => {
-			ad.product.genres = JSON.parse(ad.product.genres);
+			switch(ad.category_id) {
+				case 1:
+					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+			}
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
 			return ad;
 		});
@@ -150,10 +194,15 @@ class AdController {
 			.with('product')
 			.with('category')
 			.with('platform')
+			.orderBy('updated_at', 'desc')
 			.fetch()
 		
 		const userAds = ads.toJSON().map(ad => {
-			ad.product.genres = JSON.parse(ad.product.genres);
+			switch(ad.category_id) {
+				case 1:
+					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+			}
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
 			return ad;
 		});

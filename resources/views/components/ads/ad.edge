@@ -1,19 +1,23 @@
 {{--  Ad Display Component  --}}
 
 <div class="ad">
-	<img src="{{ ad.thumbnail }}" alt="">
+	<a href="/ad/{{ ad.id }}">
+		<img src="{{ ad.thumbnail }}" alt="">
+	</a>	
 	<div class="content">
 		<div class="header">
-		<a href="/ad/{{ ad.id }}">
 			<img height="32" width="32" src="{{ ad.platform.icon }}" class="platform" />
-		</a>
-		<h3 class="title"><a href="/ad/{{ ad.id }}">{{ ad.title }}</a></h3>
+			<h3 class="title"><a href="/ad/{{ ad.id }}">{{ ad.title }}</a></h3>
 		</div>
-		<span class="genres">
-		@each(genre in ad.product.genres)
-			<span class="genre">{{ genre }}</span>
-		@endeach
-		</span>
+		@if(ad.category_id == 1)
+			<span class="genres">
+			@each(genre in ad.product.genres)
+				<span class="genre">{{ genre }}</span>
+			@endeach
+			</span>
+		@elseif(ad.category_id == 2)
+			<span>{{ ad.product.gameAmount }} Games</span>
+		@endif
 		<span class="date">{{ ad.date }}</span>
 		<span class="price">{{ ad.price }}€</span>
 		@if(ad.category.name == 'Game')
@@ -23,8 +27,6 @@
 		@endif
 		@if(ad.category.name == 'Account')
 			<i data-feather="user" class="icon"></i>
-			<i data-feather="user" class="icon1"></i>
-			<i data-feather="user" class="icon2"></i>
 		@endif
 		<a class="link" href="/ad/{{ ad.id }}">
 			<i data-feather="arrow-right"></i>

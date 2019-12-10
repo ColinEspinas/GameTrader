@@ -29,11 +29,16 @@ class UserController {
         const ads = await user.ads()
             .with('product')
             .with('category')
-            .with('platform')
+			.with('platform')
+			.orderBy('updated_at', 'desc')
             .fetch();
 
         const userAds = ads.toJSON().map(ad => {
-            ad.product.genres = JSON.parse(ad.product.genres);
+            switch(ad.category_id) {
+				case 1:
+					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+			}
             ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
             return ad;
         });
@@ -41,12 +46,14 @@ class UserController {
 		return view.render('pages.user.profile', { user : user, ads : userAds });
 	}
 
-	async edit({ view, params }) {
+	async edit({ view, auth, params }) {
 		const user = await User.find(params.id);
-		return view.render('pages.user.settings', { user : user.toJSON() });
+		if (user.id === auth.user.id) {
+			return view.render('pages.user.settings', { user : user.toJSON() });
+		}
 	}
 
-    async update({ request, response, session, params }) {
+    async update({ request, auth, response, session, params }) {
         const { username, email, password, passwordNew, avatar, bio } = request.all();
 
         const rules = {
@@ -55,29 +62,31 @@ class UserController {
             password: 'required',
         }
         
-        const user = await User.find(params.id);
+		const user = await User.find(params.id);
+		
+		if (user.id === auth.user.id) {
+			if (email != user.email) rules.email = 'email|required|unique:users';
 
-        if (email != user.email) rules.email = 'email|required|unique:users';
+			const validation = await validate(request.all(), rules);
+			if (validation.fails()) {
+				session
+					.withErrors(validation.messages())
+					.flashAll()
+				
+				//return response.redirect('/signup'); //
+				return response.redirect(`/user/${user.id}/edit`);
+			}
 
-        const validation = await validate(request.all(), rules);
-        if (validation.fails()) {
-            session
-                .withErrors(validation.messages())
-                .flashAll()
-            
-            //return response.redirect('/signup'); //
-            return response.redirect(`/user/${user.id}/edit`);
-        }
+			user.username = username;
+			user.email = email;
+			if (passwordNew != null) user.password = passwordNew;
+			user.avatar = avatar;
+			user.bio = bio;
 
-        user.username = username;
-        user.email = email;
-        if (passwordNew != null) user.password = passwordNew;
-        user.avatar = avatar;
-        user.bio = bio;
+			await user.save();
 
-        await user.save();
-
-        return response.redirect('/');
+			return response.redirect('/');
+		}
     }
 }
 

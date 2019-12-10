@@ -189,6 +189,7 @@ hr {
 	font-family: $font-regular;
 	box-shadow: 0 5px 30px -5px rgba(color(primary), 0.5);
 	width: 100%;
+	text-decoration: none;
 	display: block;
 	transition: transform 200ms ease-out;
 	cursor: pointer;
@@ -197,7 +198,9 @@ hr {
 		align-items: center;
 		justify-content: space-between;
 		// font-weight: bold;
-		font-size: 1.1em;
+		font-size: 1rem;
+		letter-spacing: normal;
+		text-decoration: none;
 		.feather {
 			margin-left: 10px;
 		}
@@ -362,70 +365,70 @@ main {
 				}
 			}
 		}
+	}
 
-		.search {
-			position: relative;
-			width: 100%;
-			.search-bar {
-				border: 1px solid transparent;
-				background-color: transparent;
-				box-shadow: 0 0 50px -10px rgba(color(dark), 0.2);
+.search {
+	position: relative;
+	width: 100%;
+	.search-bar {
+		border: 1px solid transparent;
+		background-color: transparent;
+		box-shadow: 0 0 50px -10px rgba(color(dark), 0.2);
+		padding: 15px;
+		border-radius: 5px;
+		outline: none;
+		font-size: $font-size-default;
+		color: color(dark);
+		font-family: $font-regular;
+		width: 100%;
+		transition: border 200ms ease;
+		&:focus {
+			border: 1px solid color(primary);
+		}
+	}
+	.results, .results-account-games, .results-ad-games {
+		opacity: 0;
+		pointer-events: none;
+		list-style-type: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		margin: 10px 0 0;
+		padding: 0;
+		box-shadow: 0 0 30px -10px rgba(color(dark), 0.5);
+		z-index: 100;
+		background-color: color(lighter);
+		border-radius: 5px;
+		transition: opacity 200ms ease;
+		&.open {
+			opacity: 1;
+			pointer-events: all;
+		}
+		li {
+			button {
+				display: block;
 				padding: 15px;
-				border-radius: 5px;
-				outline: none;
-				font-size: $font-size-default;
-				color: color(dark);
+				background-color: transparent;
+				border: none;
+				width: 100%;
+				transition: background 200ms ease;
 				font-family: $font-regular;
-				width: 100%;
-				transition: border 200ms ease;
+				font-size: $font-size-default;
+				text-align: left;
+				outline: none;
+				&:hover {
+					cursor: pointer;
+					background-color: rgba(color(dark), 0.05);
+				}
 				&:focus {
-					border: 1px solid color(primary);
-				}
-			}
-			.results {
-				opacity: 0;
-				pointer-events: none;
-				list-style-type: none;
-				position: absolute;
-				top: 100%;
-				left: 0;
-				width: 100%;
-				margin: 10px 0 0;
-				padding: 0;
-				box-shadow: 0 0 30px -10px rgba(color(dark), 0.5);
-				z-index: 100;
-				background-color: color(lighter);
-				border-radius: 5px;
-				transition: opacity 200ms ease;
-				&.open {
-					opacity: 1;
-					pointer-events: all;
-				}
-				li {
-					button {
-						display: block;
-						padding: 15px;
-						background-color: transparent;
-						border: none;
-						width: 100%;
-						transition: background 200ms ease;
-						font-family: $font-regular;
-						font-size: $font-size-default;
-						text-align: left;
-						outline: none;
-						&:hover {
-							cursor: pointer;
-							background-color: rgba(color(dark), 0.05);
-						}
-						&:focus {
-							cursor: pointer;
-							background-color: rgba(color(dark), 0.05);
-						}
-					}
+					cursor: pointer;
+					background-color: rgba(color(dark), 0.05);
 				}
 			}
 		}
 	}
+}
 
 	.main-section {
 		height: calc(100% - 86px);
@@ -469,31 +472,30 @@ main {
 	}
 }
 
-#example1 {
-    background-color: transparent;
-    box-shadow: rgba(16, 20, 23, 0.2) 0px 0px 50px -10px;
-    font-size: 0.95em;
-    color: rgb(16, 20, 23);
-    font-family: Poppins, sans-serif;
-    position: relative;
-    display: flex;
-    align-items: center;
-    cursor: text;
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
-    border-image: initial;
-    padding: 15px;
-    border-radius: 5px;
-    outline: none;
-    transition: border 200ms ease 0s;
-}
+// #example1 {
+//     background-color: transparent;
+//     box-shadow: rgba(16, 20, 23, 0.2) 0px 0px 50px -10px;
+//     font-size: 0.95em;
+//     color: rgb(16, 20, 23);
+//     font-family: Poppins, sans-serif;
+//     position: relative;
+//     display: flex;
+//     align-items: center;
+//     cursor: text;
+//     border-width: 1px;
+//     border-style: solid;
+//     border-color: transparent;
+//     border-image: initial;
+//     padding: 15px;
+//     border-radius: 5px;
+//     outline: none;
+//     transition: border 200ms ease 0s;
+// }
 
 .taggle_placeholder {
     position: absolute;
     color: rgba(16, 20, 23, 0.6);
     top: 50%;
-    left: 10px;
     transform: translateY(-50%);
     user-select: none;
 }
@@ -673,6 +675,7 @@ main {
 
 		img {
 			position: relative;
+			display: block;
 			height: 150px;
 			width: 300px;
 			object-fit: cover;
@@ -719,20 +722,6 @@ main {
 			.price {
 				color: color(primary);
 				font-size: 1.5em;
-			}
-
-			.genres {
-				display: block;
-				margin-top: 5px;
-
-				.genre {
-					display: inline-block;
-					padding: 5px 10px;
-					border-radius: 50px;
-					background-color: rgba(color(dark), 0.1);
-					color: rgba(color(dark), 0.6);
-					font-size: 0.8em;
-				}
 			}
 
 			.date {
@@ -851,6 +840,20 @@ main {
 	}
 }
 
+.genres {
+	display: block;
+	margin-top: 5px;
+
+	.genre {
+		display: inline-block;
+		padding: 5px 10px;
+		border-radius: 50px;
+		background-color: rgba(color(dark), 0.1);
+		color: rgba(color(dark), 0.6);
+		font-size: 0.8em;
+	}
+}
+
 .ad-pic {
 	box-shadow: rgba(16, 20, 23, 0.15) 0px 0px 50px -5px;
     border-radius: 5px;
@@ -952,4 +955,30 @@ main {
 			color: rgba(color(dark), 0.5);
 		}
 	}
+
+	.contact-btn {
+		width: auto;
+		margin-left: auto;
+	}
+}
+
+.create-ad-form {
+	margin-bottom: 200px;
+}
+
+.ad-info {
+	padding: 25px;
+	margin: 25px 0;
+	box-shadow: 0 0 50px -10px rgba(color(dark), 0.2);
+
+	.title {
+		margin: 0;
+	}
+}
+
+.product-info {
+	padding: 25px;
+	margin: 25px 0;
+	box-shadow: 0 0 50px -10px rgba(color(dark), 0.2);
+	background-color: color(light);
 }

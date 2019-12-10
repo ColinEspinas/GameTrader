@@ -1,6 +1,7 @@
 'use strict'
 
 const Ad = use('App/Models/Ad');
+const Account = use('App/Models/Account');
 const { formatDistance, subDays } = require('date-fns');
 
 class HomeController {
@@ -9,14 +10,23 @@ class HomeController {
 		const ads = await Ad
 			.query()
 			.with('product')
+			.with('game')
+			.with('account')
 			.with('category')
 			.with('platform')
-            .groupBy('updated_at')
+			.orderBy('updated_at', 'desc')
 			.limit(10)
 			.fetch()
 		
 		const latestAds = ads.toJSON().map(ad => {
-			ad.product.genres = JSON.parse(ad.product.genres);
+			switch(ad.category_id) {
+				case 1:
+					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+				case 2:
+					ad.product = ad.account;
+					break;
+			}
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
 			return ad;
 		});
