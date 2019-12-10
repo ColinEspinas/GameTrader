@@ -4,6 +4,10 @@
 	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 @endsection
 
+@section('title')
+GameTrader - Ad - {{ ad.title }}
+@endsection
+
 @section('content')
 	<div class="ad-main-content">
 		<div class="swiper-container">
@@ -24,7 +28,7 @@
 	<div class="main-container">
 		<div class="user-info">
 			<div class="avatar">
-					<a href="/user/{{ seller.id }}">
+					<a href="/users/{{ seller.id }}">
 						<img src="{{ (seller.avatar) ? seller.avatar : '/avatar.jpg' }}" alt="">
 					</a>
 			</div>
@@ -48,7 +52,18 @@
 				</span>
 			@elseif(ad.category_id == 2)
 				<span class="game-count block">Amount of games: {{ product.gameAmount }}</span>
-				<span class="games-title block">Top Games: {{ ad.gameNames }}</span>
+				<span class="games-title block">Top Games: 
+				<hr>
+				@each(game in ad.games)
+					<span class="game-title block"><b>{{ game.name }}</b></span>
+					<span class="genres block">
+					@each(genre in game.genres)
+						<span class="genre">{{ genre }}</span>
+					@endeach
+					</span>
+					<hr>
+				@endeach
+				</span>
 			@else
 
 			@endif

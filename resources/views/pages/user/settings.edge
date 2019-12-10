@@ -13,7 +13,7 @@
 	<h1>Settings</h1>
 
 	<div class="profile-container">
-	<form action="/user/{{ auth.user.id }}/edit?_method=PUT" method="POST">
+	<form action="/users/{{ auth.user.id }}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
 			{{ csrfField() }}
 
 			<label class="block margin-tb-15">Personnal Information:</label>
@@ -29,7 +29,7 @@
 					{{ getErrorFor('email') }}
 				</span>
 			@endif
-			<input type="avatar" name="avatar" value="{{ old('avatar', '') }}" placeholder="Avatar" class="input width-100 margin-tb-5">
+			<input type="file" accept="image/*" name="avatar" value="{{ old('avatar', '') }}" placeholder="Avatar" class="input width-100 margin-tb-5">
 
 			<label class="block margin-tb-15">Security Information:</label>
 			<input type="password" name="password" value="" placeholder="Current Password (Required)" class="input width-100 margin-tb-5" required>

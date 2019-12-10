@@ -21,7 +21,7 @@ GameTrader - Post Ad
 					{{ getErrorFor('title') }}
 				</span>
 			@endif
-			<input type="text" name="content" placeholder="Description" class="input width-100 margin-tb-5">
+			<textarea type="text" name="content" placeholder="Description" style="resize: vertical" class="input width-100 margin-tb-5"></textarea>
 			@if(hasErrorFor('content'))
 				<span>
 					{{ getErrorFor('content') }}

@@ -31,10 +31,10 @@ class AdController {
 				break;
 
 			case 2:
-				const games = await Game.query().where("account_id", product.id).fetch();
+				let games = await Game.query().where("account_id", product.id).fetch();
+				ad.games = games.toJSON();
 				ad.images = [];
-				ad.gameNames = [];
-				for (const game of games.toJSON()) {
+				for (let game of ad.games) {
 					await fetch(`https://api.rawg.io/api/games/${game.gamedata_id}/screenshots`)
 					.then(res => res.json())
 					.then(json => {
@@ -42,7 +42,7 @@ class AdController {
 							ad.images.push(screenshot.image);
 						});
 					});
-					ad.gameNames.push(game.name);
+					game.genres = JSON.parse(game.genres);
 				}
 				break;
 
@@ -62,7 +62,7 @@ class AdController {
 			await auth.check();
 		} catch (error) {
             session.flash({ message: 'You must be logged to post !' })
-            return response.redirect('/ad/create');
+            return response.redirect('/ads/create');
 		}
 
 		// try {
@@ -89,7 +89,7 @@ class AdController {
 
                 default:
                     session.flash({ message: 'Category could not be found...' })
-                    return response.redirect('/ad/create');
+                    return response.redirect('/ads/create');
             }
 
             // Validations
@@ -99,7 +99,7 @@ class AdController {
                     .withErrors(validation.messages())
                     .flashAll()
                 
-                return response.redirect('/ad/create');
+                return response.redirect('/ads/create');
             }
 
             // Create
@@ -160,7 +160,7 @@ class AdController {
             }
             await ad.save();
 
-			return response.redirect('/user/ads');
+			return response.redirect('/users/ads');
 		// } catch (error) {
         //     session.flash({ message: 'Something is wrong with your ad.' })
         //     return response.redirect('/ad/create');
@@ -169,7 +169,8 @@ class AdController {
 
     async authUserIndex({ view, auth }) {
         const ads = await auth.user.ads()
-			.with('product')
+			.with('game')
+			.with('account')
 			.with('category')
 			.with('platform')
 			.orderBy('updated_at', 'desc')
@@ -178,7 +179,11 @@ class AdController {
 		const userAds = ads.toJSON().map(ad => {
 			switch(ad.category_id) {
 				case 1:
+					ad.product = ad.game;
 					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+				case 2:
+					ad.product = ad.account;
 					break;
 			}
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
@@ -191,7 +196,8 @@ class AdController {
 	async userIndex({ view, params }) {
 		const user = User.find(params.id);
 		const ads = await user.ads()
-			.with('product')
+			.with('game')
+			.with('account')
 			.with('category')
 			.with('platform')
 			.orderBy('updated_at', 'desc')
@@ -200,7 +206,11 @@ class AdController {
 		const userAds = ads.toJSON().map(ad => {
 			switch(ad.category_id) {
 				case 1:
+					ad.product = ad.game;
 					ad.product.genres = JSON.parse(ad.product.genres);
+					break;
+				case 2:
+					ad.product = ad.account;
 					break;
 			}
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
@@ -239,25 +249,99 @@ class AdController {
     }
 
     async edit({ params, auth, view }) {
-		const ad = await Ad.find(params.id);
+		let ad = await Ad.query().with('game').with('account').where('id', params.id).first();
+		ad = ad.toJSON();
+		switch(ad.category_id) {
+			case 1:
+				ad.product = ad.game;
+				ad.product.genres = JSON.parse(ad.product.genres);
+				break;
+			case 2:
+				ad.product = ad.account;
+				break;
+		}
 		if (ad.user_id === auth.user.id) {
 			return view.render('pages.ad.edit', { ad : ad });
 		}
     }
 
     async update({ response, auth, request, session, params }) {
-		
-		const ad = await Ad.find(params.id);
-		if (ad.user_id === auth.user.id) {
+        try {
+            await auth.check();
+            let rules = {};
+            const ad = await Ad.find(params.id);
 
-			ad.title = request.input('title');
-			ad.content = request.input('content');
+            // Rules
+            switch (ad.category_id)
+            {
+                case 1:
+                    rules = {
+                        'gameName': 'required',
+						'gameKey': 'required',
+                    }
+                    break;
 
-			await ad.save();
+                case 2:
+                    rules = {
+                        'accountUsername': 'required',
+                        'accountPassword': 'required',
+                        'accountGAmount': 'required|above:0'
+                    }
+                    break;
 
-			session.flash({ message: 'Your Ad has been updated.' });
-			return response.redirect('/user/ads');
-		}
+                default:
+                    session.flash({ message: 'Category could not be found...' })
+                    return response.redirect(`/ads/${params.id}/edit`);
+            }
+
+            // Validations
+            const validation = await validate(request.all(), rules);
+            if (validation.fails()) {
+                session
+                    .withErrors(validation.messages())
+                    .flashAll()
+                
+                return response.redirect(`/ads/${params.id}/edit`);
+            }
+
+            // Update
+            ad.title = request.input('title');
+            ad.content = request.input('content');
+            ad.price = request.input('price');
+            switch (ad.category_id)
+            {
+                case 1:
+                    const game = await Game.find(ad.product_id)
+                    game.key = request.input('gameKey');
+                    await fetch('https://api.rawg.io/api/games?page=1&page_size=1&search=' + request.input('gameName'))
+                        .then(res => res.json())
+                        .then(json => { 
+                            game.gamedata_id = json.results[0].id;
+							ad.thumbnail = json.results[0].background_image;
+							game.genres = JSON.stringify(json.results[0].genres.map(genre => {
+								return genre.name;
+							}));
+                         });
+                    await game.save();
+                    break;
+
+                case 2:
+                    const account = await Account.find(ad.product_id);
+                    account.username = request.input('accountUsername');
+                    account.password = request.input('accountPassword');
+                    account.gameAmount = request.input('accountGAmount');
+                    await account.save();
+                    break;
+
+                default: break;
+            }
+            await ad.save();
+
+            return response.redirect('/users/ads');
+        } catch (error) {
+            session.flash({ message: 'You must be logged to post !' })
+            return response.redirect(`/ads/${params.id}/edit`);
+        }
     }
 }
 

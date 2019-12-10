@@ -9,7 +9,6 @@ class HomeController {
 	async index({ view }) {
 		const ads = await Ad
 			.query()
-			.with('product')
 			.with('game')
 			.with('account')
 			.with('category')
@@ -21,6 +20,7 @@ class HomeController {
 		const latestAds = ads.toJSON().map(ad => {
 			switch(ad.category_id) {
 				case 1:
+					ad.product = ad.game;
 					ad.product.genres = JSON.parse(ad.product.genres);
 					break;
 				case 2:

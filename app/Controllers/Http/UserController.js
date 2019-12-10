@@ -74,7 +74,7 @@ class UserController {
 					.flashAll()
 				
 				//return response.redirect('/signup'); //
-				return response.redirect(`/user/${user.id}/edit`);
+				return response.redirect(`/users/${user.id}/edit`);
 			}
 
 			user.username = username;

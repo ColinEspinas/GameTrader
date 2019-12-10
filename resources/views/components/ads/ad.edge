@@ -1,13 +1,13 @@
 {{--  Ad Display Component  --}}
 
 <div class="ad">
-	<a href="/ad/{{ ad.id }}">
+	<a href="/ads/{{ ad.id }}">
 		<img src="{{ ad.thumbnail }}" alt="">
 	</a>	
 	<div class="content">
 		<div class="header">
 			<img height="32" width="32" src="{{ ad.platform.icon }}" class="platform" />
-			<h3 class="title"><a href="/ad/{{ ad.id }}">{{ ad.title }}</a></h3>
+			<h3 class="title"><a href="/ads/{{ ad.id }}">{{ ad.title }}</a></h3>
 		</div>
 		@if(ad.category_id == 1)
 			<span class="genres">
@@ -28,7 +28,7 @@
 		@if(ad.category.name == 'Account')
 			<i data-feather="user" class="icon"></i>
 		@endif
-		<a class="link" href="/ad/{{ ad.id }}">
+		<a class="link" href="/ads/{{ ad.id }}">
 			<i data-feather="arrow-right"></i>
 		</a>
 	</div>

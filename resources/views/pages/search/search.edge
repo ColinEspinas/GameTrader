@@ -1,0 +1,15 @@
+@layout('layouts.app')
+
+@section('title')
+	GameTrader - Search
+@endsection
+
+@section('stylesheets')
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+@endsection
+
+@section('content')
+<div class="main-container">
+	@!component('components.ads.ads-display', ads=ads, user=auth.user)
+</div>
+@endsection
