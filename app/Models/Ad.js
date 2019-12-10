@@ -17,12 +17,20 @@ class Ad extends Model {
         }
 	}
 
+	account() {
+		return this.hasOne('App/Models/Account', 'product_id', 'id');
+	}
+
+	game() {
+		return this.hasOne('App/Models/Game', 'product_id', 'id');
+	}
+
 	category() {
-		return this.hasOne('App/Models/Category', 'category_id', 'id');
+		return this.belongsTo('App/Models/Category');
 	}
 
 	platform() {
-		return this.hasOne('App/Models/Platform', 'platform_id', 'id');
+		return this.belongsTo('App/Models/Platform');
 	}
 
 	date() {

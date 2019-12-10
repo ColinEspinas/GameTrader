@@ -48,8 +48,8 @@
 				@loggedIn
 				<div class="user-section">
 					<div class="avatar">
-						<a href="/user/{{ auth.user.id }}">
-							<img src="/avatar.jpg" alt="">
+						<a href="/users/{{ auth.user.id }}">
+							<img src="{{ (auth.user.avatar) ? auth.user.avatar : '/avatar.jpg' }}" alt="">
 						</a>
 					</div>
 					<div class="infos">
@@ -59,15 +59,20 @@
 				</div>
 				@endloggedIn
 				<div class="action-section">
-					<button class="highlight-btn" onclick="window.location.replace('/ad/create')"><span>Create an Ad<i data-feather="plus"></i></span></button>
+					<button class="highlight-btn" onclick="window.location.replace('/ads/create')"><span>Create an Ad<i data-feather="plus"></i></span></button>
 				</div>
 				<ul class="menu">
 					<div class="title">Menu</div>
 					<li><a class="{{ (url == '/') ? 'active' : '' }}" href="/"><i data-feather="home"></i>Home</a></li>
+					<li><a class="{{ (url == '/search') ? 'active' : '' }}" href="/search"><i data-feather="search"></i>Search</a></li>
+				</ul>
 				@loggedIn
-				<li><a class="{{ (url == '/user/' + auth.user.id) ? 'active' : '' }}" href="/user/{{ auth.user.id }}"><i data-feather="user"></i>Profile</a></li>
-				<li><a class="{{ (url == '/user/ads') ? 'active' : '' }}" href="/user/ads"><i data-feather="file-text"></i>My Ads</a></li>
-				<li><a class="{{ (url == '/user/' + auth.user.id + '/edit') ? 'active' : '' }}" href="/user/{{ auth.user.id }}/edit"><i data-feather="tool"></i>Settings</a></li>
+				<ul class="menu">
+					<div class="title">Account</div>
+					<li><a class="{{ (url == '/users/' + auth.user.id) ? 'active' : '' }}" href="/users/{{ auth.user.id }}"><i data-feather="user"></i>Profile</a></li>
+					<li><a class="{{ (url == '/users/ads') ? 'active' : '' }}" href="/users/ads"><i data-feather="file-text"></i>My Ads</a></li>
+					<li><a class="{{ (url == '/users/' + auth.user.id + '/edit') ? 'active' : '' }}" href="/users/{{ auth.user.id }}/edit"><i data-feather="tool"></i>Settings</a></li>
+				</ul>
 				@endloggedIn
 				</ul>
 				<ul class="menu">
@@ -84,7 +89,7 @@
 			<div class="header-bar">
 				<button class="menu-btn"><i data-feather="chevron-right"></i></button>
 				<div class="search">
-					<div id="example1" class="">
+					<div id="searchTaggle" class="input">
 					</div>
 					<ul class="results"></ul>
 				</div>

@@ -1,106 +1,80 @@
 @layout('layouts.app')
 
-@section('extracss')
-{{ style('css/temporary') }}
-@endsection
-
 @section('title')
-GameTrader - Edit Ad
+GameTrader - Edit - {{ ad.title }}
 @endsection
 
 @section('content')
-  <h1>Editing</h1>
+<div class="main-container">
+	<h1>Editing</h1>
 
-  <div class="editing-container">
-    @if(flashMessage('message'))
-        <span>{{ flashMessage('message') }}</span>
-    @endif
-      <form action="/ad/{{ ad.id }}/edit?_method=PUT" method="POST">
-        {{ csrfField() }}
+	<div class="editing-container">
+		@if(flashMessage('message'))
+			<span>{{ flashMessage('message') }}</span>
+		@endif
+		<form action="/ads/{{ ad.id }}/edit?_method=PUT" method="POST">
+			{{ csrfField() }}
 
-        <label for="title">Title</label>
-        <input type="text" name="title" value="{{ ad.title }}">
-        @if(hasErrorFor('title'))
-            <span>
-                {{ getErrorFor('title') }}
-            </span>
-        @endif
+			<input type="text" name="title" value="{{ ad.title }}" placeholder="Title" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('title'))
+				<span>
+					{{ getErrorFor('title') }}
+				</span>
+			@endif
+			<input type="text" name="content" value="{{ ad.content }}" placeholder="Description" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('content'))
+				<span>
+					{{ getErrorFor('content') }}
+				</span>
+			@endif
+			<input type="number" step="0.01" name="price" value="{{ ad.price }}" placeholder="Price" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('price'))
+				<span>
+					{{ getErrorFor('price') }}
+				</span>
+			@endif
 
-        <label for="content">Content</label>
-        <input type="text" name="content" value="{{ ad.content }}">
-        @if(hasErrorFor('content'))
-            <span>
-                {{ getErrorFor('content') }}
-            </span>
-        @endif
+			@if(ad.category_id == 1)
+			<h2>Game</h2>
+			<input type="text" name="gameName" value="{{ ad.product.name }}" placeholder="Game Name" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('gameName'))
+				<span>
+					{{ getErrorFor('gameName') }}
+				</span>
+			@endif
+			<input type="text" name="gameKey" value="{{ ad.product.key }}" placeholder="Game Key" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('gameKey'))
+				<span>
+					{{ getErrorFor('gameKey') }}
+				</span>
+			@endif
+			
+			@elseif(ad.category_id == 2)
+			<h2>Account</h2>
+			<input type="text" name="accountUsername" value="{{ ad.product.username }}" placeholder="Account Username" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountUsername'))
+				<span>
+					{{ getErrorFor('accountUsername') }}
+				</span>
+			@endif
+			<input type="password" name="accountPassword" value="{{ ad.product.password }}" placeholder="Account Password" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountPassword'))
+				<span>
+					{{ getErrorFor('accountPassword') }}
+				</span>
+			@endif
+			<input type="number" name="accountGAmount" value="{{ ad.product.gameAmount }}" placeholder="Total game amount (At least 1)" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountGAmount'))
+				<span>
+					{{ getErrorFor('accountGAmount') }}
+				</span>
+			@endif
+			
+			@endif
 
-        <label for="price">Price</label>
-        <input type="number" step="0.01" name="price" value="{{ ad.price }}">
-        @if(hasErrorFor('price'))
-            <span>
-                {{ getErrorFor('price') }}
-            </span>
-        @endif
-
-        @if(ad.category_id == 1)
-          <h2>Game</h2>
-
-          <label for="gameName">Name</label>
-          <input type="text" name="gameName" value="">
-          @if(hasErrorFor('gameName'))
-              <span>
-                  {{ getErrorFor('gameName') }}
-              </span>
-          @endif
-
-          <label for="gameKey">Key</label>
-          <input type="text" name="gameKey" value="{{ ad.product.key }}">
-          @if(hasErrorFor('gameKey'))
-              <span>
-                  {{ getErrorFor('gameKey') }}
-              </span>
-          @endif
-        
-        @elseif(ad.category_id == 2)
-          <h2>Account</h2>
-
-          <label for="accountUsername">Username</label>
-          <input type="text" name="accountUsername" value="{{ ad.product.username }}">
-          @if(hasErrorFor('accountUsername'))
-              <span>
-                  {{ getErrorFor('accountUsername') }}
-              </span>
-          @endif
-
-          <label for="accountPassword">Password</label>
-          <input type="password" name="accountPassword" value="{{ ad.product.password }}">
-          @if(hasErrorFor('accountPassword'))
-              <span>
-                  {{ getErrorFor('accountPassword') }}
-              </span>
-          @endif
-
-          <label for="accountAvatar">Avatar</label>
-          <input type="text" name="accountAvatar" value="{{ ad.product.avatar }}">
-
-          <label for="accountCountry">Country</label>
-          <input type="text" name="accountCountry" value="{{ ad.product.country }}">
-
-          <label for="accountPhone">Phone</label>
-            <input type="tel" name="accountPhone" value="{{ ad.product.phone }}">
-
-          <label for="accountGAmount">Game Amount</label>
-          <input type="number" name="accountGAmount" value="{{ ad.product.gameAmount }}">
-          @if(hasErrorFor('accountGAmount'))
-              <span>
-                  {{ getErrorFor('accountGAmount') }}
-              </span>
-          @endif
-        
-        @endif
-
-        <button type="submit">Update Ad</button>
-
-      </form>
-  </div>
+			<button type="submit" class="highlight-btn margin-tb-15 width-25 right">Update Ad</button>
+			<div class="lil-clear"></div>
+		</form>
+	</div>
+</div>
 @endsection

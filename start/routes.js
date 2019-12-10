@@ -38,7 +38,7 @@ Route.group(() => {
 	Route.get("/:id/edit", 'UserController.edit');
 	Route.put("/:id/edit", 'UserController.update');
 
-}).prefix('/user');
+}).prefix('/users');
 
 Route.group(() => {
 	Route.get('/create', "AdController.create");
@@ -50,9 +50,9 @@ Route.group(() => {
 	
 	Route.get('/:id/edit', 'AdController.edit');
     Route.put('/:id/edit', 'AdController.update');
-}).prefix('/ad');
+}).prefix('/ads');
 
-
+Route.get('/search', 'SearchController.index');
 
 // TO REMOVE
 Route.get('/upload', 'UploadController.index');

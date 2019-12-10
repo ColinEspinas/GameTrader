@@ -13,14 +13,15 @@
 	{{--  <h1>Profile</h1>  --}}
 	<div class="user-info">
 		<div class="avatar">
-				<a href="/user/{{ auth.user.id }}">
-					<img src="/avatar.jpg" alt="">
+				<a href="/users/{{ user.id }}">
+					<img src="{{ (user.avatar) ? user.avatar : '/avatar.jpg' }}" alt="">
 				</a>
 		</div>
 		<div class="infos">
-			<span class="name">{{ auth.user.username }}</span>
+			<span class="name">{{ user.username }}</span>
 			{{--  <span class="rating">Rating: 4.76/5</span>  --}}
 		</div>
+		<a class="highlight-btn contact-btn" href="mailto:{{ user.email }}"><span>Contact<i data-feather="mail"></i></span></a>
 	</div>
 	@!component('components.ads.ads-display',title='Ads', ads=ads, user=auth.user)
 </div>

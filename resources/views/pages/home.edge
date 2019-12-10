@@ -31,7 +31,7 @@
 		<div class="swiper-button-prev"></div>
 	</div>
 
-	@!component('components.ads.ads-display',title='Recent Ads', ads=ads)
+	@!component('components.ads.ads-display',title='Recent Ads', ads=ads, user=auth.user)
 </div>
 
 @endsection
