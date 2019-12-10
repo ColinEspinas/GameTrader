@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		allowDuplicates: false,
 		preserveCase: true,
 		clearOnBlur: false,
-		hiddenInputName: "SearchTags[]"
+		hiddenInputName: "searchTags[]"
 	});
 
 	let searchBar = searchBarTaggle.getInput();

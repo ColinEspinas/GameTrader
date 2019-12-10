@@ -9,7 +9,11 @@
 @endsection
 
 @section('content')
+{{ toJSON(ads) }}
 <div class="main-container">
+	<form action="/search" method="GET">
+		
+	</form>
 	@!component('components.ads.ads-display', ads=ads, user=auth.user)
 </div>
 @endsection
