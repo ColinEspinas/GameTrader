@@ -9,11 +9,39 @@
 @endsection
 
 @section('content')
-{{ toJSON(ads) }}
 <div class="main-container">
-	<form action="/search" method="GET">
-		
+	<h1>Search</h1>
+	<form action="/ads" method="GET">
+		<div class="search">
+			<div id="searchPageTaggle" class="input">
+			</div>
+			<ul class="search-page-results"></ul>
+		</div>
+		<div class="" style="display: flex; align-items: center">
+			@!component('components.select-box', id='category', title='Select categories', items = categories)
+			@!component('components.select-box', id='genres', title='Select genres', items = genres)
+			<input type="number" id="game-amount-input" name="gameAmount" placeholder="Total game amount" class="input margin-lr-15" style="display: none">
+			<button type="submit" class="highlight-btn width-25 margin-tb-15 right" style="margin-left: auto">Search</button>
+		</div>
+		<div class="lil-clear"></div>
 	</form>
 	@!component('components.ads.ads-display', ads=ads, user=auth.user)
 </div>
 @endsection
+
+@section('post-content-scripts')
+
+<script>
+	const categories = document.querySelector('#category-select');
+
+	categories.addEventListener('click', ()=>{
+		if (document.getElementsByName('categories[]')[1].checked) {
+			document.querySelector("#game-amount-input").style.display = "block";
+		}
+		else {
+			document.querySelector("#game-amount-input").style.display = "none";
+		}
+	});
+</script>
+
+@endsection  

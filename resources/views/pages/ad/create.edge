@@ -6,111 +6,120 @@ GameTrader - Post Ad
 
 @section('content')
 <div class="main-container">
-	<h1>Posting</h1>
-
+	@loggedIn
+	<h1>Post an Ad</h1>
 	<div class="posting-container">
-		@if(flashMessage('message'))
-			<span>{{ flashMessage('message') }}</span>
+	@if(flashMessage('message'))
+		<span>{{ flashMessage('message') }}</span>
+	@endif
+	<form action="{{ route('AdController.create') }}" method="POST" class="create-ad-form">
+		{{ csrfField() }}
+
+		<input type="text" name="title" placeholder="Title" class="input width-100 margin-tb-5">
+		@if(hasErrorFor('title'))
+			<span>
+				{{ getErrorFor('title') }}
+			</span>
 		@endif
-		<form action="{{ route('AdController.create') }}" method="POST" class="create-ad-form">
-			{{ csrfField() }}
+		<textarea type="text" name="content" placeholder="Description" style="resize: vertical" class="input width-100 margin-tb-5"></textarea>
+		@if(hasErrorFor('content'))
+			<span>
+				{{ getErrorFor('content') }}
+			</span>
+		@endif
+		<input type="number" step="0.01" name="price" placeholder="Price" class="input width-100 margin-tb-5">
+		@if(hasErrorFor('price'))
+			<span>
+				{{ getErrorFor('price') }}
+			</span>
+		@endif
+		<select name="categoryID" id="category-select" class="input width-100 margin-tb-5">
+			<option value="0">Choose a category</option>
+			<option value="1">Game</option>
+			<option value="2">Account</option>
+		</select>
+		@if(hasErrorFor('categoryID'))
+			<span>
+				{{ getErrorFor('categoryID') }}
+			</span>
+		@endif
+		<select name="platform" class="input width-100 margin-tb-5">
+				<option value="0">Choose a platform</option>
+				@each(platform in platforms)
+					<option value="{{ platform.id }}">{{ platform.name }}</option>
+				@endeach
+		</select>
+		@if(hasErrorFor('platform'))
+			<span>
+				{{ getErrorFor('platform') }}
+			</span>
+		@endif
+		<div class="game-container" style="display: none">
+			<h2>Game</h2>
 
-			<input type="text" name="title" placeholder="Title" class="input width-100 margin-tb-5">
-			@if(hasErrorFor('title'))
-				<span>
-					{{ getErrorFor('title') }}
-				</span>
-			@endif
-			<textarea type="text" name="content" placeholder="Description" style="resize: vertical" class="input width-100 margin-tb-5"></textarea>
-			@if(hasErrorFor('content'))
-				<span>
-					{{ getErrorFor('content') }}
-				</span>
-			@endif
-			<input type="number" step="0.01" name="price" placeholder="Price" class="input width-100 margin-tb-5">
-			@if(hasErrorFor('price'))
-				<span>
-					{{ getErrorFor('price') }}
-				</span>
-			@endif
-			<select name="categoryID" id="category-select" class="input width-100 margin-tb-5">
-				<option value="0">Choose a category</option>
-				<option value="1">Game</option>
-				<option value="2">Account</option>
-			</select>
-			@if(hasErrorFor('categoryID'))
-				<span>
-					{{ getErrorFor('categoryID') }}
-				</span>
-			@endif
-			<select name="platform" class="input width-100 margin-tb-5">
-					<option value="0">Choose a platform</option>
-					@each(platform in platforms)
-						<option value="{{ platform.id }}">{{ platform.name }}</option>
-					@endeach
-			</select>
-			@if(hasErrorFor('platform'))
-				<span>
-					{{ getErrorFor('platform') }}
-				</span>
-			@endif
-			<div class="game-container" style="display: none">
-				<h2>Game</h2>
-
-				<div class="search">
-					<input type="text" name="gameName" placeholder="Name" id="game-bar" class="input width-100 margin-tb-5" autocomplete="off">
-					<ul class="results-ad-games"></ul>
-				</div>
-				
-				@if(hasErrorFor('gameName'))
-					<span>
-						{{ getErrorFor('gameName') }}
-					</span>
-				@endif
-
-				<input type="text" name="gameKey" placeholder="Game Key" class="input width-100 margin-tb-5">
-				@if(hasErrorFor('gameKey'))
-					<span>
-						{{ getErrorFor('gameKey') }}
-					</span>
-				@endif
+			<div class="search">
+				<input type="text" name="gameName" placeholder="Name" id="game-bar" class="input width-100 margin-tb-5" autocomplete="off">
+				<ul class="results-ad-games"></ul>
 			</div>
 			
-			<div class="account-container" style="display: none">
-				<h2>Account</h2>
+			@if(hasErrorFor('gameName'))
+				<span>
+					{{ getErrorFor('gameName') }}
+				</span>
+			@endif
 
-				<input type="text" name="accountUsername" placeholder="Account Username" class="input width-100 margin-tb-5">
-				@if(hasErrorFor('accountUsername'))
-					<span>
-						{{ getErrorFor('accountUsername') }}
-					</span>
-				@endif
+			<input type="text" name="gameKey" placeholder="Game Key" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('gameKey'))
+				<span>
+					{{ getErrorFor('gameKey') }}
+				</span>
+			@endif
+		</div>
+		
+		<div class="account-container" style="display: none">
+			<h2>Account</h2>
 
-				<input type="password" name="accountPassword" placeholder="Account Password" class="input width-100 margin-tb-5">
-				@if(hasErrorFor('accountPassword'))
-					<span>
-						{{ getErrorFor('accountPassword') }}
-					</span>
-				@endif
-				
-				<label class="block margin-tb-15">Add games like tags with "," or "return" in the input below.</label>
-				<div class="search">
-					<div id="accountGamesTaggle" class="input width-100 margin-tb-5">
-					</div>
-					<ul class="results-account-games"></ul>
+			<input type="text" name="accountUsername" placeholder="Account Username" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountUsername'))
+				<span>
+					{{ getErrorFor('accountUsername') }}
+				</span>
+			@endif
+
+			<input type="password" name="accountPassword" placeholder="Account Password" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountPassword'))
+				<span>
+					{{ getErrorFor('accountPassword') }}
+				</span>
+			@endif
+			
+			<label class="block margin-tb-15">Add games like tags with "," or "return" in the input below.</label>
+			<div class="search">
+				<div id="accountGamesTaggle" class="input width-100 margin-tb-5">
 				</div>
-
-				<input type="number" name="accountGAmount" placeholder="Total game amount (At least 1)" class="input width-100 margin-tb-5">
-				@if(hasErrorFor('accountGAmount'))
-					<span>
-						{{ getErrorFor('accountGAmount') }}
-					</span>
-				@endif
+				<ul class="results-account-games"></ul>
 			</div>
 
-			<button type="submit" class="highlight-btn margin-tb-15 width-25 right">Post Ad</button>
-			<div class="lil-clear"></div>
-		</form>
+			<input type="number" name="accountGAmount" placeholder="Total game amount (At least 1)" class="input width-100 margin-tb-5">
+			@if(hasErrorFor('accountGAmount'))
+				<span>
+					{{ getErrorFor('accountGAmount') }}
+				</span>
+			@endif
+		</div>
+
+		<button type="submit" class="highlight-btn margin-tb-15 width-25 right">Post Ad</button>
+		<div class="lil-clear"></div>
+	</form>
+	@else
+	<div class="margin-tb-15 center" style="display: flex; flex-direction:column; align-items: center">
+		<p>You need to be logged to post ads.</p>
+		<a href="/signup" class="highlight-btn margin-tb-15 width-25">No account yet? Join us!</a>
+		<a href="/login" class="margin-lr-15">Or log In here!</a>
+	</div>
+	@endloggedIn
+
+	
 	</div>
 </div>
 @endsection

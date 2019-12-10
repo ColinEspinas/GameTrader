@@ -21,77 +21,156 @@ document.addEventListener("DOMContentLoaded", function() {
 
     selectButtons.forEach(button => {
         let selectBox = document.querySelector("#" + button.id.slice(0, -4));
-        console.log("#" + button.id.slice(0, -4));
         button.addEventListener("click", function() {
             selectBox.classList.toggle("open");
         })
     });
 
-	let searchBarTaggle = new Taggle('searchTaggle',{
-		placeholder: 'Search for games...',
-		allowDuplicates: false,
-		preserveCase: true,
-		clearOnBlur: false,
-		hiddenInputName: "searchTags[]"
-	});
-
-	let searchBar = searchBarTaggle.getInput();
-
-	// let searchBar = document.querySelector(".search-bar");
-	let resultsDiv = document.querySelector(".results");
-	let resultsBtns;
-
-	// Research 5 games from RAWG API to put in the autocomplete
-	var search = async searchVal => {
-		if (searchVal.length !== 0) {
-			let res = await fetch(`https://api.rawg.io/api/games?page_size=5&search=${searchVal}`);
-			let result = await res.json();
-			let games = result.results.slice(0, 5);
-			let searchResults = games.map(game => `<li class="result"><button type="button">${game.name}</button></li>`).join("");
-			resultsDiv.innerHTML = searchResults;
-			resultsBtns = document.querySelectorAll(".result button");
-			resultsBtns.forEach(function(result, index) {
-				result.addEventListener("click", function() {
-					searchBar.value = this.innerText;
-					resultsDiv.classList.remove('open');
-					searchBar.focus();
-				});
-				result.addEventListener("keydown", (e) => {
-					if (e.key === "ArrowDown") {
-						resultsBtns[(index + 1) % resultsBtns.length].focus();
-					}
-					if (e.key === "ArrowUp") {
-						if (index - 1 < 0) {
-							resultsBtns[resultsBtns.length - 1].focus();
-						} 
-						else {
-							resultsBtns[(index - 1) % resultsBtns.length].focus();
+	if (document.querySelector('#searchTaggle')) {
+		let searchBarTaggle = new Taggle('searchTaggle',{
+			placeholder: 'Search for games...',
+			allowDuplicates: false,
+			preserveCase: true,
+			clearOnBlur: false,
+			hiddenInputName: "searchTags[]"
+		});
+	
+		let searchBar = searchBarTaggle.getInput();
+	
+		// let searchBar = document.querySelector(".search-bar");
+		let resultsDiv = document.querySelector(".results");
+		let resultsBtns;
+	
+		// Research 5 games from RAWG API to put in the autocomplete
+		var search = async searchVal => {
+			if (searchVal.length !== 0) {
+				let res = await fetch(`https://api.rawg.io/api/games?page_size=5&search=${searchVal}`);
+				let result = await res.json();
+				let games = result.results.slice(0, 5);
+				let searchResults = games.map(game => `<li class="result"><button type="button">${game.name}</button></li>`).join("");
+				resultsDiv.innerHTML = searchResults;
+				resultsBtns = document.querySelectorAll(".result button");
+				resultsBtns.forEach(function(result, index) {
+					result.addEventListener("click", function() {
+						searchBar.value = this.innerText;
+						resultsDiv.classList.remove('open');
+						searchBar.focus();
+					});
+					result.addEventListener("keydown", (e) => {
+						if (e.key === "ArrowDown") {
+							resultsBtns[(index + 1) % resultsBtns.length].focus();
 						}
-					}
+						if (e.key === "ArrowUp") {
+							if (index - 1 < 0) {
+								resultsBtns[resultsBtns.length - 1].focus();
+							} 
+							else {
+								resultsBtns[(index - 1) % resultsBtns.length].focus();
+							}
+						}
+					});
 				});
-			});
-		}
-	}
-
-	searchBar.addEventListener("input", function() {
-		resultsDiv.innerHTML = "";
-		search(searchBar.value);
-		resultsDiv.classList.add('open');
-	});
-
-	searchBar.addEventListener("keydown", (e) => {
-		console.log(e.key);
-		if (e.key === "Escape") {
-			searchBar.blur();
-			resultsDiv.classList.remove('open');
-		}
-		if (e.key === "ArrowDown") {
-			if (resultsBtns.length > 0) {
-				resultsBtns[0].focus();
 			}
 		}
-	});
+	
+		searchBar.addEventListener("input", function() {
+			resultsDiv.innerHTML = "";
+			search(searchBar.value);
+			resultsDiv.classList.add('open');
+		});
+	
+		searchBar.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				searchBar.blur();
+				resultsDiv.classList.remove('open');
+			}
+			if (e.key === "ArrowDown") {
+				if (resultsBtns.length > 0) {
+					resultsBtns[0].focus();
+				}
+			}
+		});
 
+		document.addEventListener("click", (e) => {
+			if (e.target != resultsDiv && !resultsDiv.contains(e.target)) {
+				resultsDiv.classList.remove("open");
+			}
+		});
+	}
+	
+
+	// Search page search bar :
+	if (document.querySelector('#searchPageTaggle')) {
+		let searchBarTaggle = new Taggle('searchPageTaggle',{
+			placeholder: 'Search for ads or games...',
+			allowDuplicates: false,
+			preserveCase: true,
+			clearOnBlur: false,
+			hiddenInputName: "searchTags[]"
+		});
+
+		let searchBar = searchBarTaggle.getInput();
+
+		// let searchBar = document.querySelector(".search-bar");
+		let resultsDiv = document.querySelector(".search-page-results");
+		let resultsBtns;
+
+		// Research 5 games from RAWG API to put in the autocomplete
+		var search = async searchVal => {
+			if (searchVal.length !== 0) {
+				let res = await fetch(`https://api.rawg.io/api/games?page_size=5&search=${searchVal}`);
+				let result = await res.json();
+				let games = result.results.slice(0, 5);
+				let searchResults = games.map(game => `<li class="search-page-result"><button type="button">${game.name}</button></li>`).join("");
+				resultsDiv.innerHTML = searchResults;
+				resultsBtns = document.querySelectorAll(".search-page-result button");
+				resultsBtns.forEach(function(result, index) {
+					result.addEventListener("click", function() {
+						searchBar.value = this.innerText;
+						resultsDiv.classList.remove('open');
+						searchBar.focus();
+					});
+					result.addEventListener("keydown", (e) => {
+						if (e.key === "ArrowDown") {
+							resultsBtns[(index + 1) % resultsBtns.length].focus();
+						}
+						if (e.key === "ArrowUp") {
+							if (index - 1 < 0) {
+								resultsBtns[resultsBtns.length - 1].focus();
+							} 
+							else {
+								resultsBtns[(index - 1) % resultsBtns.length].focus();
+							}
+						}
+					});
+				});
+			}
+		}
+
+		searchBar.addEventListener("input", function() {
+			resultsDiv.innerHTML = "";
+			search(searchBar.value);
+			resultsDiv.classList.add('open');
+		});
+
+		searchBar.addEventListener("keydown", (e) => {
+			if (e.key === "Escape") {
+				searchBar.blur();
+				resultsDiv.classList.remove('open');
+			}
+			if (e.key === "ArrowDown") {
+				if (resultsBtns.length > 0) {
+					resultsBtns[0].focus();
+				}
+			}
+		});
+
+		document.addEventListener("click", (e) => {
+			if (e.target != resultsDiv && !resultsDiv.contains(e.target)) {
+				resultsDiv.classList.remove("open");
+			}
+		});
+	}
 	// Ad Game search :
 	let gameBar = document.querySelector("#game-bar");
 	let gameResultsDiv = document.querySelector(".results-ad-games");
@@ -137,7 +216,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	
 		gameBar.addEventListener("keydown", (e) => {
-			console.log(e.key);
 			if (e.key === "Escape") {
 				gameBar.blur();
 				gameResultsDiv.classList.remove('open');
@@ -148,8 +226,17 @@ document.addEventListener("DOMContentLoaded", function() {
 				}
 			}
 		});
+
+		document.addEventListener("click", (e) => {
+			if (e.target != gameResultsDiv && !gameResultsDiv.contains(e.target)) {
+				gameResultsDiv.classList.remove("open");
+			}
+		});
 	}
 	
+
+	let accountResultsDiv = document.querySelector(".results-account-games");
+	let accountResultsBtns;
 
 	// Account games :
 	if (document.querySelector('#accountGamesTaggle')) {
@@ -162,9 +249,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 	
 		let accountBar = accountBarTaggle.getInput();
-	
-		let accountResultsDiv = document.querySelector(".results-account-games");
-		let accountResultsBtns;
 	
 		if (accountBar) {
 			var accountGameSearch = async searchVal => {
@@ -205,7 +289,6 @@ document.addEventListener("DOMContentLoaded", function() {
 			});
 		
 			accountBar.addEventListener("keydown", (e) => {
-				console.log(e.key);
 				if (e.key === "Escape") {
 					accountBar.blur();
 					accountResultsDiv.classList.remove('open');
@@ -215,7 +298,13 @@ document.addEventListener("DOMContentLoaded", function() {
 						accountResultsBtns[0].focus();
 					}
 				}
-			});	
+			});
+
+			document.addEventListener("click", (e) => {
+				if (e.target != accountResultsDiv && !accountResultsDiv.contains(e.target)) {
+					accountResultsDiv.classList.remove("open");
+				}
+			});
 		}
 	}
 
@@ -227,20 +316,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 selectBox.classList.remove("open");
             }
 		});
-		if (e.target != resultsDiv && !resultsDiv.contains(e.target)) {
-			resultsDiv.classList.remove("open");
-		}
-		if (e.target != accountResultsDiv && !accountResultsDiv.contains(e.target)) {
-			accountResultsDiv.classList.remove("open");
-		}
-		if (e.target != gameResultsDiv && !gameResultsDiv.contains(e.target)) {
-			gameResultsDiv.classList.remove("open");
-		}
 	});
 
 	// Close menu
 	document.querySelector(".close-btn").addEventListener("click", (e) => {
-		console.log("test");
 		document.querySelector(".side-nav").style.transform = "translateX(-100%)";
 		document.querySelector(".side-nav").style.width = 0;
 		document.querySelector("main").style.width = "100%";

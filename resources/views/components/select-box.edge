@@ -1,12 +1,12 @@
 {{--  Select box Component  --}}
 
 <div class="select-container">
-<button class="select-btn" id="{{ id }}-select-btn">{{ title }}<i data-feather="chevron-down"></i></button>
+<button class="select-btn" type="button" id="{{ id }}-select-btn">{{ title }}<i data-feather="chevron-down"></i></button>
 	<ul class="select-box" id="{{ id }}-select">
 		@each(item in items)
 			<li>
 				<label>
-				<input type="checkbox" name="{{ item.name }}">
+				<input type="checkbox" name="{{ item.name }}" value="{{ item.value }}">
 					<span class="checkmark"></span>
 					<span class="text">{{ item.display }}</span>
 				</label>
@@ -15,12 +15,22 @@
 	</ul>
 </div>
 
+<script>
+OverlayScrollbars(document.querySelectorAll('#{{ id }}-select'), {
+	sizeAutoCapable : true,
+	paddingAbsolute : true,
+	scrollbars : {
+		clickScrolling : true
+	}
+});
+</script>
+
 
 {{--  Usage exemple  --}}
 
 {{--  
 	@!component('components.select-box', id='test', title='Select something', items = [
-		{name: 'choice1', display: 'Choice1'},
-		{name: 'choice2', display: 'Choice2'}
+		{name: 'choice1', display: 'Choice1', value: 1},
+		{name: 'choice2', display: 'Choice2', value: 2}
 	])
 --}}

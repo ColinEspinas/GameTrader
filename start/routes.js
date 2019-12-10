@@ -30,6 +30,7 @@ Route.get('/logout', async ({ auth, response }) => {
 });
 
 Route.group(() => { 
+
 	Route.get("/:id/ads", 'AdController.userIndex');
 	Route.get("/ads", 'AdController.authUserIndex');
 
@@ -41,6 +42,9 @@ Route.group(() => {
 }).prefix('/users');
 
 Route.group(() => {
+
+	Route.get('/', 'SearchController.index');
+
 	Route.get('/create', "AdController.create");
 	Route.post('/create', 'AdController.store').validator('PostAd');
 
@@ -49,10 +53,15 @@ Route.group(() => {
 	Route.get('/:id/delete', 'AdController.delete');
 	
 	Route.get('/:id/edit', 'AdController.edit');
-    Route.put('/:id/edit', 'AdController.update');
+	Route.put('/:id/edit', 'AdController.update');
+	
 }).prefix('/ads');
 
-Route.get('/search', 'SearchController.index');
+Route.group(() => {
+
+	Route.get('/ads', 'SearchController.index');
+
+}).prefix('/api');
 
 // TO REMOVE
 Route.get('/upload', 'UploadController.index');

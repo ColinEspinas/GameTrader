@@ -45,23 +45,27 @@ GameTrader - Ad - {{ ad.title }}
 		<div class="product-info">
 				<span class="category-title"><b>{{ ad.category.name }}</b><span>
 			@if(ad.category_id == 1)
-				<span class="game-title block"><b>{{ ad.gameName }}</b></span>
-				<span class="genres block">
-				@each(genre in product.genres)
-					<span class="genre">{{ genre }}</span>
-				@endeach
-				</span>
+				<a class="game-info" href="/ads?searchTags[]={{ ad.gameName }}">
+					<span class="game-title block"><b>{{ ad.gameName }}</b></span>
+					<span class="genres block">
+					@each(genre in product.genres)
+						<span class="genre">{{ genre }}</span>
+					@endeach
+					</span>
+				</a>
 			@elseif(ad.category_id == 2)
 				<span class="game-count block">Amount of games: {{ product.gameAmount }}</span>
 				<span class="games-title block">Top Games: 
 				<hr>
 				@each(game in ad.games)
-					<span class="game-title block"><b>{{ game.name }}</b></span>
-					<span class="genres block">
-					@each(genre in game.genres)
-						<span class="genre">{{ genre }}</span>
-					@endeach
-					</span>
+					<a class="game-info" href="/ads?searchTags[]={{ game.name }}">
+						<span class="game-title block"><b>{{ game.name }}</b></span>
+						<span class="genres block">
+						@each(genre in game.genres)
+							<span class="genre">{{ genre }}</span>
+						@endeach
+						</span>
+					</a>
 					<hr>
 				@endeach
 				</span>

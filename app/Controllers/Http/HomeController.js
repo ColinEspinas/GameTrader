@@ -1,8 +1,9 @@
 'use strict'
 
 const Ad = use('App/Models/Ad');
-const Account = use('App/Models/Account');
-const { formatDistance, subDays } = require('date-fns');
+const Game = use('App/Models/Game');
+const { formatDistance } = require('date-fns');
+const fetch = require('node-fetch');
 
 class HomeController {
 
@@ -30,7 +31,24 @@ class HomeController {
 			ad.date = formatDistance(new Date(ad.created_at), new Date(), { addSuffix: true })
 			return ad;
 		});
-        return view.render('pages.home', { ads : latestAds });
+
+		const games = await Game
+			.query()
+			.orderBy('updated_at', 'desc')
+			.limit(5)
+			.fetch()
+
+		let sliderGames = games.toJSON();
+		
+		for (const game of sliderGames) {
+			await fetch('https://api.rawg.io/api/games?page=1&page_size=1&search=' + game.name)
+				.then(res => res.json())
+				.then(json => {
+					game.image = json.results[0].background_image;
+				});
+		}
+
+		return view.render('pages.home', { ads : latestAds, sliderGames: sliderGames });
 	}
 
 }

@@ -64,7 +64,7 @@
 				<ul class="menu">
 					<div class="title">Menu</div>
 					<li><a class="{{ (url == '/') ? 'active' : '' }}" href="/"><i data-feather="home"></i>Home</a></li>
-					<li><a class="{{ (url == '/search') ? 'active' : '' }}" href="/search"><i data-feather="search"></i>Search</a></li>
+					<li><a class="{{ (url == '/search') ? 'active' : '' }}" href="/ads"><i data-feather="search"></i>Search</a></li>
 				</ul>
 				@loggedIn
 				<ul class="menu">
@@ -89,7 +89,7 @@
 			<div class="header-bar">
 				<button class="menu-btn"><i data-feather="chevron-right"></i></button>
 				<div class="search">
-					<form action="/search" method="GET">
+					<form action="/ads" method="GET">
 						<div id="searchTaggle" class="input">
 						</div>
 					</form>
@@ -99,7 +99,8 @@
 			<div class="main-section">
 				@!section('content')
 				<footer>
-					<p>Just a temporary page footer 😉</p>
+					<p>Made with ❤️. Made in ⏰. Made through 💧.</p>
+					<p>Made by Colin Espinas & Bastien Legoy.</p>
 				</footer>
 			</div>
 		</main>

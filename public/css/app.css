@@ -17,6 +17,9 @@ hr {
   background-color: rgba(16, 20, 23, 0.1);
   height: 1px; }
 
+a {
+  color: #1C3FFD; }
+
 .side-nav {
   background-color: #F7F8F9;
   height: 100vh;
@@ -145,6 +148,7 @@ hr {
     transform: scale(1.05); }
 
 .select-container {
+  display: inline-block;
   position: relative;
   font-size: 0.95em; }
   .select-container .select-btn {
@@ -158,7 +162,6 @@ hr {
     outline: none;
     padding: 15px 25px;
     border-radius: 5px;
-    margin: 0 auto;
     cursor: pointer;
     color: rgba(16, 20, 23, 0.6);
     transition: color 200ms ease, background 200ms ease; }
@@ -168,6 +171,7 @@ hr {
       color: #101417;
       background-color: rgba(16, 20, 23, 0.05); }
   .select-container .select-box {
+    max-height: 300px;
     margin: 10px 0 0;
     padding: 0;
     list-style-type: none;
@@ -182,18 +186,21 @@ hr {
     box-shadow: 0 0 40px -5px rgba(16, 20, 23, 0.2);
     transition: opacity 200ms ease, top 200ms ease;
     border-radius: 5px;
-    z-index: 100; }
+    z-index: 100;
+    cursor: pointer; }
     .select-container .select-box.open {
       top: 100%;
       display: block;
       opacity: 1;
       pointer-events: all; }
     .select-container .select-box li {
-      transition: background 200ms ease; }
+      transition: background 200ms ease;
+      cursor: pointer; }
       .select-container .select-box li label {
         display: flex;
         align-items: center;
-        padding: 15px; }
+        padding: 15px;
+        cursor: pointer; }
         .select-container .select-box li label input[type="checkbox"] {
           position: absolute;
           opacity: 0;
@@ -285,7 +292,7 @@ main {
       transition: border 200ms ease; }
       main .search .search-bar:focus {
         border: 1px solid #1C3FFD; }
-    main .search .results, main .search .results-account-games, main .search .results-ad-games {
+    main .search .results, main .search .results-account-games, main .search .results-ad-games, main .search .search-page-results {
       opacity: 0;
       pointer-events: none;
       list-style-type: none;
@@ -300,10 +307,10 @@ main {
       background-color: #FAFBFB;
       border-radius: 5px;
       transition: opacity 200ms ease; }
-      main .search .results.open, main .search .results-account-games.open, main .search .results-ad-games.open {
+      main .search .results.open, main .search .results-account-games.open, main .search .results-ad-games.open, main .search .search-page-results.open {
         opacity: 1;
         pointer-events: all; }
-      main .search .results li button, main .search .results-account-games li button, main .search .results-ad-games li button {
+      main .search .results li button, main .search .results-account-games li button, main .search .results-ad-games li button, main .search .search-page-results li button {
         display: block;
         padding: 15px;
         background-color: transparent;
@@ -314,10 +321,10 @@ main {
         font-size: 0.95em;
         text-align: left;
         outline: none; }
-        main .search .results li button:hover, main .search .results-account-games li button:hover, main .search .results-ad-games li button:hover {
+        main .search .results li button:hover, main .search .results-account-games li button:hover, main .search .results-ad-games li button:hover, main .search .search-page-results li button:hover {
           cursor: pointer;
           background-color: rgba(16, 20, 23, 0.05); }
-        main .search .results li button:focus, main .search .results-account-games li button:focus, main .search .results-ad-games li button:focus {
+        main .search .results li button:focus, main .search .results-account-games li button:focus, main .search .results-ad-games li button:focus, main .search .search-page-results li button:focus {
           cursor: pointer;
           background-color: rgba(16, 20, 23, 0.05); }
   main .main-section {
@@ -453,13 +460,13 @@ main {
 .ad-slide {
   box-shadow: rgba(16, 20, 23, 0.15) 0px 0px 50px -5px;
   border-radius: 5px;
-  background: #fafbfb;
-  transition: background 200ms ease 0s !important; }
+  background-color: #fafbfb;
+  background-size: cover; }
 
 .ad-slide.swiper-slide-active {
   box-shadow: rgba(16, 20, 23, 0.15) 0px 0px 50px -5px;
   border-radius: 5px;
-  background: #1c3ffd; }
+  background-color: #1c3ffd; }
 
 .swiper-button-prev {
   margin-left: 5%; }
@@ -726,4 +733,8 @@ main {
   margin: 25px 0;
   box-shadow: 0 0 50px -10px rgba(16, 20, 23, 0.2);
   background-color: #F7F8F9; }
+
+.game-info {
+  color: #101417;
+  text-decoration: none; }
 

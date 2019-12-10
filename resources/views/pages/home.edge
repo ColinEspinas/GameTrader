@@ -12,15 +12,9 @@
 <div class="home-container">
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
-			<div class="swiper-slide ad-slide"></div>
+			@each(game in sliderGames)
+			<a class="swiper-slide ad-slide" href="/ads?searchTags[]={{ game.name }}&categories=1" style="background-image: url('{{ game.image }}')"></a>
+			@endeach
 		</div>
 
 		<!-- Add Pagination -->
