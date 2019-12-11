@@ -71,7 +71,7 @@ class SearchController {
 		let allAds = await Ad.query().with('game').with('platform').with('category').with('account').fetch();
 		let results = [];
 
-		if (request.input('categories') || request.input('searchTags') || request.input('gameAmount')) {
+		if (request.input('categories') || request.input('searchTags') || request.input('gameAmount') || request.input('genres')) {
 
 			let tmpResults = [];
 
